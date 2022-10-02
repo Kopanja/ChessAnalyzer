@@ -1,11 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import { useEffect, useState } from "react";
-import { Game } from '../types/Game.types';
-import GameListComponent from './GameListComponent';
 const UserPage = () => {
-   
-    const [isUsernameEntered, setIsUsernameEntered] = useState<boolean>(false);
+    const [games, setGames] = useState<any>();
     const [username, setUsername] = useState<string>("");
 
     /*
@@ -24,7 +21,13 @@ const UserPage = () => {
       }, [])
 */
       const onButtonClick = () => {
-        setIsUsernameEntered(true);
+        axios.get(`https://api.chess.com/pub/player/${username}/games/2022/08`)
+        .then((res) => {
+            console.log(res.data);
+        }).catch((err) => {
+            console.log("Ne postoji");
+            console.log(err);
+        })
       }
   return (
     <div>
@@ -32,13 +35,7 @@ const UserPage = () => {
     Chess.com Username:
     </label>
     <input name='email' required value={username} onChange={(e) => {setUsername(e.target.value)}} type="text"></input>
-    <button onClick={onButtonClick}>Ok</button>
-    {isUsernameEntered  &&
-
-    <GameListComponent user={{username : username}}></GameListComponent>
-
-    }
-    </div>
+    <button onClick={onButtonClick}>Ok</button></div>
   )
 }
 

@@ -2,15 +2,36 @@ import React from 'react'
 import {Chessboard} from "react-chessboard";
 import { useEffect, useState } from "react";
 import {Chess} from "chess.js";
+import { useLocation } from "react-router-dom";
 const ChessBoardComponent = () => {
 
     const [fen, setFen] = useState<string>('start')
     const [game, setGame] = useState<Chess>(new Chess());
     const [history, setHistory] = useState<[]>([]);
     const [squares, setSquares] = useState<[]>([]);
+    const location = useLocation();
+    
 
 
-    const makeAMove = (move : {from : string, to : string}) => {
+  const extractPGN = () => {
+    const fullString = location.state?.data.pgn;
+    const pgnOnly = fullString.split('\n')[22];
+    const moves = [];
+    const pgnList = pgnOnly.split(" ")
+    console.log(pgnList);
+    for (let i = 1; i < pgnList.length; i+= 4){
+      moves.push(pgnList[i]);
+    }
+
+    console.log(moves);
+    return moves;
+  }
+  
+  
+  const moves = extractPGN();
+   
+  
+  const makeAMove = (move : {from : string, to : string}) => {
         
         console.log(move.from);
         console.log(move.to);
@@ -26,7 +47,7 @@ const ChessBoardComponent = () => {
         console.log(fen);
         console.log(sourceSquare);
         console.log(game.fen())
-       
+      
         const move = makeAMove({
           from: sourceSquare,
           to: targetSquare,
@@ -43,8 +64,24 @@ const ChessBoardComponent = () => {
         
       }
     
+  const makeSavedMove = () => {
+    const currentMove = game.move('d4');
+    moves.forEach((move, index) => {
+      setTimeout(()=>{
+        game.move(move);
+        setGame(game);
+        setFen(game.fen());
+      }, index*1000);
+      
+      
+    })
+    
+  }
   return (
-    <div><Chessboard position={fen} onPieceDrop = {onDrop}/></div>
+    <div><Chessboard position={fen} onPieceDrop = {onDrop}/>
+    <button onClick={makeSavedMove}>Make Move</button>
+    
+    </div>
  //   <Chessboard position={this.state.fen} onSquareClick = {this.onSquareClick}
   //      squareStyles={this.state.squareStyles} onDrop = {this.onDrop}/>
   )

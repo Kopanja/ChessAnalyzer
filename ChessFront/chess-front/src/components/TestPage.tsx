@@ -4,7 +4,6 @@ import UserPage from './UserPage'
 const TestPage = () => {
   return (
     <div>
-        <ChessBoardComponent/>
         <UserPage/>
     
     </div>
