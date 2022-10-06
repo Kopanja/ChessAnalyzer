@@ -22,7 +22,7 @@ const ChessBoardComponent = () => {
     for (let i = 1; i < pgnList.length; i+= 4){
       moves.push(pgnList[i]);
     }
-
+    console.log(location.state?.data);
     console.log(moves);
     return moves;
   }
