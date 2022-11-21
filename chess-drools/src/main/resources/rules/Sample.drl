@@ -1,0 +1,70 @@
+package com.sample
+ 
+import com.sbnz.chessanalyzer.model.Move;
+import com.sbnz.chessanalyzer.model.BoardCounter;
+import java.lang.Math;
+import com.sbnz.chessanalyzer.util.FENParser;
+import com.sbnz.chessanalyzer.model.Board;
+import com.sbnz.chessanalyzer.model.Square;
+import java.util.List;
+import java.lang.Object;
+import com.sbnz.chessanalyzer.model.piece.Piece;
+
+
+rule "Insert Counter"
+salience 9999
+when
+	not BoardCounter()
+then
+	insert(new BoardCounter());
+end
+
+rule "Move Rule 1"
+    when
+        $m : Move(label == 0 && Math.abs(preMoveEval - postMoveEval) > 100)
+    then
+    	
+        modify($m){setLabel(Move.BLUNDER)}
+end
+
+rule "Move Rule 2"
+no-loop
+    when
+        $m : Move($fen : fen,label == Move.BLUNDER)
+        $c : BoardCounter($counter : counter)
+    then
+    	modify($c){setCounter($counter + 1)};
+    	insert(FENParser.parse($fen, $counter));
+end
+
+
+rule "Number of boards"
+no-loop
+    when
+    	$board : Board($boardNum : boardNum)
+        
+    then
+    	//System.out.println("Board Number: " + $boardNum);
+    	
+end
+
+rule "Board Rule 2"
+    when
+        $b : Board()
+        $s : Object() from $b.squares
+        $square : Square($boardNum : boardNum) from $s
+        
+    then
+    	insert($square);
+end
+
+
+rule "Insert Piece Rule"
+	when
+		$s : Square($piece : piece, piece != null) 
+	then
+		insert($piece);
+		
+end
+
+	

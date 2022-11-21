@@ -1,0 +1,15 @@
+//created on: Oct 25, 2022
+package com.pieceMoves
+
+//list any import classes here.
+import com.sbnz.chessanalyzer.model.piece.Piece;
+import com.sbnz.chessanalyzer.model.piece.Knight;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.CanMoveOn;
+
+
+//declare any global variables here
+
+query findCanMoveOn( Piece piece, Square square )
+  CanMoveOn(piece, square;)
+end

@@ -3,6 +3,7 @@ import {Chessboard} from "react-chessboard";
 import { useEffect, useState } from "react";
 import {Chess} from "chess.js";
 import { useLocation } from "react-router-dom";
+import axios from 'axios';
 const ChessBoardComponent = () => {
 
     const [fen, setFen] = useState<string>('start')
@@ -16,12 +17,16 @@ const ChessBoardComponent = () => {
   const extractPGN = () => {
     const fullString = location.state?.data.pgn;
     const pgnOnly = fullString.split('\n')[22];
+    game.loadPgn(pgnOnly);
+    console.log("AAAAAAAAAAAAAAAAAAAA");
+    console.log(game.history({ verbose: true }));
     const moves = [];
     const pgnList = pgnOnly.split(" ")
     console.log(pgnList);
     for (let i = 1; i < pgnList.length; i+= 4){
       moves.push(pgnList[i]);
     }
+    
     console.log(location.state?.data);
     console.log(moves);
     return moves;
@@ -29,7 +34,23 @@ const ChessBoardComponent = () => {
   
   
   const moves = extractPGN();
-   
+  
+  const sendMoves = () => {
+    /*
+    axios.post("http://localhost:5000/post-moves", moves).then((res) => {
+      console.log(res.data);
+    })
+    */
+    
+    axios.post("http://localhost:5000/post-moves-saved-data", game.history({ verbose: true })).then((res) => {
+      console.log("Stockfish zavrsio");
+      axios.post("http://localhost:8080/api/test/post-moves", res.data).then((res) => {
+        console.log("Drools zavrsio");
+      console.log(res.data);
+    })
+    })
+    
+  }
   
   const makeAMove = (move : {from : string, to : string}) => {
         
@@ -65,14 +86,14 @@ const ChessBoardComponent = () => {
       }
     
   const makeSavedMove = () => {
-    const currentMove = game.move('d4');
+    
     moves.forEach((move, index) => {
       setTimeout(()=>{
         game.move(move);
         setGame(game);
         setFen(game.fen());
       }, index*1000);
-      
+   
       
     })
     
@@ -80,6 +101,7 @@ const ChessBoardComponent = () => {
   return (
     <div><Chessboard position={fen} onPieceDrop = {onDrop}/>
     <button onClick={makeSavedMove}>Make Move</button>
+    <button onClick={sendMoves}>Send Moves</button>
     
     </div>
  //   <Chessboard position={this.state.fen} onSquareClick = {this.onSquareClick}

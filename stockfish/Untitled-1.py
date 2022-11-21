@@ -58,6 +58,27 @@ def test_stockfish(pngMoves, startFen,stockfish):
     stockfish.set_fen_position(stockfishBoard.fen())
     print("Stock Game: " ,stockfish.get_evaluation()['value'])
 
+
+
+def find_mistakes(pngMoves, startFen, stockfish):
+    mistakes = []
+    gameBoard = chess.Board()
+    gameBoard.set_fen(startFen)
+    for move in pngMoves:
+        stockfish.set_fen_position(gameBoard.fen())
+        preMoveEvaluation = stockfish.get_evaluation()['value']
+
+        gameBoard.push_san(move)
+
+        stockfish.set_fen_position(gameBoard.fen())
+        postMoveEval = stockfish.get_evaluation()['value']
+
+
+        if(abs(preMoveEvaluation - postMoveEval) > 100):
+            mistakes.append(move)
+    return mistakes
+
+
 def test_nesto(pngMoves, startFen,stockfish):
     gameBoard = chess.Board()
     stockfishBoard = chess.Board()

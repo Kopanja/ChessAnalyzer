@@ -1,0 +1,131 @@
+//created on: Nov 21, 2022
+package com.bishopDefending
+
+//list any import classes here.
+
+import java.util.List;
+import com.sbnz.chessanalyzer.model.piece.Piece;
+import com.sbnz.chessanalyzer.model.piece.Knight;
+import com.sbnz.chessanalyzer.model.piece.Bishop;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.CanMoveOn;
+import com.sbnz.chessanalyzer.model.IsOnPath;
+import com.sbnz.chessanalyzer.model.Board;
+import com.sbnz.chessanalyzer.util.TestUtil;
+import com.sbnz.chessanalyzer.model.TestClass;
+import com.sbnz.chessanalyzer.model.IsDefending;
+import com.sbnz.chessanalyzer.model.CanMoveOn.CanMoveOnType;
+
+
+//declare any global variables here
+
+
+
+rule "Bishop First IsDefending Right Up Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$b : Bishop(this.equals($piece), $color : color)
+		$s2 : Square(rank == $startRank + 1, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color)    
+	then
+       insertLogical(new IsDefending($b,$p));
+end
+
+
+rule "Bishop IsDefending Right Up Diagonal"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$b : Bishop($color : color)
+		CanMoveOn($b,$s,CanMoveOnType.RIGHT_UP;)
+		$s2 : Square(rank == $startRank + 1, file == $startFile + 1, boardNum == $boardNumS, $piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color)
+		
+	then
+		insertLogical(new IsDefending($b,$p));
+end
+
+
+rule "Bishop First IsDefending Right Down Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$b : Bishop(this.equals($piece), $color : color)
+		$s2 : Square(rank == $startRank - 1, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color)    
+	then
+       insertLogical(new IsDefending($b,$p));
+end
+
+
+rule "Bishop IsDefending Right Down Diagonal"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$b : Bishop($color : color)
+		CanMoveOn($b,$s,CanMoveOnType.RIGHT_DOWN;)
+		$s2 : Square(rank == $startRank - 1, file == $startFile + 1, boardNum == $boardNumS, $piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color)
+		
+	then
+		insertLogical(new IsDefending($b,$p));
+end
+
+
+rule "Bishop First IsDefending Left Up Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$b : Bishop(this.equals($piece),$color : color)
+		$s2 : Square(rank == $startRank + 1, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color)    
+	then
+       insertLogical(new IsDefending($b,$p));
+end
+
+
+rule "Bishop IsDefending Left Up Diagonal"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$b : Bishop($color : color)
+		CanMoveOn($b,$s,CanMoveOnType.LEFT_UP;)
+		$s2 : Square(rank == $startRank + 1, file == $startFile - 1, boardNum == $boardNumS, $piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color)
+		
+	then
+		insertLogical(new IsDefending($b,$p));
+end
+
+rule "Bishop First IsDefending Left Down Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$b : Bishop(this.equals($piece),$color : color)
+		$s2 : Square(rank == $startRank - 1, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color)    
+	then
+       insertLogical(new IsDefending($b,$p));
+end
+
+
+rule "Bishop IsDefending Left Down Diagonal"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$b : Bishop($color : color)
+		CanMoveOn($b,$s,CanMoveOnType.LEFT_DOWN;)
+		$s2 : Square(rank == $startRank - 1, file == $startFile - 1, boardNum == $boardNumS, $piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color)
+		
+	then
+		insertLogical(new IsDefending($b,$p));
+end
+
+rule "LAST3"
+salience -99
+  when
+  		$b : Bishop()
+  		IsDefending($b,$p;)
+  		$s : Square(piece == $p, $squareText : squareText)
+    then
+        System.out.println("Bishop color: " + $b.getColor() + " Is Defending: " + $p.getColor() + " " + $p.getFEN() + " on square: " + $squareText);
+
+end

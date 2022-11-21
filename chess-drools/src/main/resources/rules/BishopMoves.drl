@@ -1,0 +1,125 @@
+//created on: Oct 31, 2022
+package com.bishopMoves
+
+//list any import classes here.
+import java.util.List;
+import com.sbnz.chessanalyzer.model.piece.Piece;
+import com.sbnz.chessanalyzer.model.piece.Knight;
+import com.sbnz.chessanalyzer.model.piece.Bishop;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.CanMoveOn;
+import com.sbnz.chessanalyzer.model.IsOnPath;
+import com.sbnz.chessanalyzer.model.Board;
+import com.sbnz.chessanalyzer.util.TestUtil;
+import com.sbnz.chessanalyzer.model.TestClass;
+import com.sbnz.chessanalyzer.model.IsAttacking;
+import com.sbnz.chessanalyzer.model.CanMoveOn.CanMoveOnType;
+//declare any global variables here
+
+
+rule "Bishop First CanMove Right Up Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$b : Bishop(this.equals($piece))
+		$s2 : Square(rank == $startRank + 1, file == $startFile + 1, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($b,$s2, CanMoveOnType.RIGHT_UP));
+end
+
+
+rule "Bishop CanMove Right Up Diagonal"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$b : Bishop()
+		CanMoveOn($b,$s,CanMoveOnType.RIGHT_UP;)
+		$s2 : Square(rank == $startRank + 1, file == $startFile + 1, boardNum == $boardNumS, piece == null)
+		
+	then
+		insertLogical(new CanMoveOn($b,$s2, CanMoveOnType.RIGHT_UP));
+end
+
+
+rule "Bishop First CanMove Right Down Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$b : Bishop(this.equals($piece))
+		$s2 : Square(rank == $startRank - 1, file == $startFile + 1, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.RIGHT_DOWN));
+end
+
+
+rule "Bishop CanMove Right Down Diagonal"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$b : Bishop()
+		CanMoveOn($b,$s,CanMoveOnType.RIGHT_DOWN;)
+		$s2 : Square(rank == $startRank - 1, file == $startFile + 1, boardNum == $boardNumS, piece == null)
+	
+	then
+		insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.RIGHT_DOWN));
+end
+
+
+rule "Bishop First CanMove Left Up Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$b : Bishop(this.equals($piece))
+		$s2 : Square(rank == $startRank + 1, file == $startFile - 1, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_UP));
+end
+
+
+rule "Bishop CanMove Left Up Diagonal"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$b : Bishop()
+		CanMoveOn($b,$s,CanMoveOnType.LEFT_UP;)
+		$s2 : Square(rank == $startRank + 1, file == $startFile - 1, boardNum == $boardNumS, piece == null)
+		
+	then
+		insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_UP));
+end
+
+rule "Bishop First CanMove Left Down Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$b : Bishop(this.equals($piece))
+		$s2 : Square(rank == $startRank - 1, file == $startFile - 1, boardNum == $boardNumS, piece == null)
+		
+    then
+    	
+        insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_DOWN));
+end
+
+
+rule "Bishop CanMove Left Down Diagonal"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$b : Bishop()
+		CanMoveOn($b,$s,CanMoveOnType.LEFT_DOWN;)
+		$s2 : Square(rank == $startRank - 1, file == $startFile - 1, boardNum == $boardNumS, piece == null)
+	then
+		System.out.println("AS");
+		insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_DOWN));
+end
+
+/*
+rule "LAST2"
+salience -99
+  when
+  		$b : Bishop()
+  		CanMoveOn($b,$s,$c;)
+    then
+        System.out.println("Bishop Can Move on: " + $s.getSquareText());
+
+end
+
+*/
+
+
