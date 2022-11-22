@@ -82,7 +82,7 @@ public class CanMoveOn {
 	}
 	
 	public enum CanMoveOnType {
-        RIGHT_UP, LEFT_UP, RIGHT_DOWN, LEFT_DOWN, KNIGHT;
+        RIGHT_UP, LEFT_UP, RIGHT_DOWN, LEFT_DOWN, KNIGHT, UP, DOWN, LEFT, RIGHT;
     }
 
 	

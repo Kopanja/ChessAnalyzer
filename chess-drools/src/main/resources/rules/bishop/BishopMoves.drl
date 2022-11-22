@@ -105,7 +105,6 @@ rule "Bishop CanMove Left Down Diagonal"
 		CanMoveOn($b,$s,CanMoveOnType.LEFT_DOWN;)
 		$s2 : Square(rank == $startRank - 1, file == $startFile - 1, boardNum == $boardNumS, piece == null)
 	then
-		System.out.println("AS");
 		insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_DOWN));
 end
 

@@ -1,0 +1,118 @@
+//created on: Nov 22, 2022
+package com.rook
+
+//list any import classes here.
+import com.sbnz.chessanalyzer.model.piece.Piece;
+import com.sbnz.chessanalyzer.model.piece.Rook;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.CanMoveOn;
+import com.sbnz.chessanalyzer.model.IsOnPath;
+import com.sbnz.chessanalyzer.model.Board;
+import com.sbnz.chessanalyzer.model.CanMoveOn.CanMoveOnType;
+
+
+//declare any global variables here
+
+
+
+
+rule "Rook First CanMove Up"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$r : Rook(this.equals($piece))
+		$s2 : Square(rank == $startRank + 1, file == $startFile, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.UP));
+end
+
+
+rule "Rook CanMove Up"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$r : Rook()
+		CanMoveOn($r,$s,CanMoveOnType.UP;)
+		$s2 : Square(rank == $startRank + 1, file == $startFile, boardNum == $boardNumS, piece == null)
+		
+	then
+		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.UP));
+end
+
+rule "Rook First CanMove Down"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$r : Rook(this.equals($piece))
+		$s2 : Square(rank == $startRank - 1, file == $startFile, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.DOWN));
+end
+
+
+rule "Rook CanMove Down"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$r : Rook()
+		CanMoveOn($r,$s,CanMoveOnType.DOWN;)
+		$s2 : Square(rank == $startRank - 1, file == $startFile, boardNum == $boardNumS, piece == null)
+		
+	then
+		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.DOWN));
+end
+
+rule "Rook First CanMove Left"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$r : Rook(this.equals($piece))
+		$s2 : Square(rank == $startRank, file == $startFile - 1, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.LEFT));
+end
+
+
+rule "Rook CanMove Left"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$r : Rook()
+		CanMoveOn($r,$s,CanMoveOnType.LEFT;)
+		$s2 : Square(rank == $startRank, file == $startFile - 1, boardNum == $boardNumS, piece == null)
+		
+	then
+		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.LEFT));
+end
+
+
+rule "Rook First CanMove Right"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$r : Rook(this.equals($piece))
+		$s2 : Square(rank == $startRank, file == $startFile + 1, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.RIGHT));
+end
+
+
+rule "Rook CanMove Right"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$r : Rook()
+		CanMoveOn($r,$s,CanMoveOnType.RIGHT;)
+		$s2 : Square(rank == $startRank, file == $startFile + 1, boardNum == $boardNumS, piece == null)
+		
+	then
+		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.RIGHT));
+end
+/*
+rule "LAST Rook"
+salience -99
+  when
+  		$r : Rook($boardNumber : boardNum)
+  		CanMoveOn($r,$s,CanMoveOnType.RIGHT;)
+  		$b : Board(boardNum == $boardNumber, $fen : fen)
+    then
+        System.out.println("Rook Can Move on: " + $s.getSquareText() + " in position: " + $fen);
+
+end
+*/
