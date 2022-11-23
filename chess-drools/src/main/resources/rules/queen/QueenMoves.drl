@@ -1,0 +1,211 @@
+//created on: Nov 23, 2022
+package com.queen
+
+//list any import classes here.
+import com.sbnz.chessanalyzer.model.piece.Piece;
+import com.sbnz.chessanalyzer.model.piece.Queen;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.CanMoveOn;
+import com.sbnz.chessanalyzer.model.IsOnPath;
+import com.sbnz.chessanalyzer.model.Board;
+import com.sbnz.chessanalyzer.model.CanMoveOn.CanMoveOnType;
+
+
+//declare any global variables here
+
+
+
+
+rule "Queen First CanMove Up"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$r : Queen(this.equals($piece))
+		$s2 : Square(rank == $startRank + 1, file == $startFile, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.UP));
+end
+
+
+rule "Queen CanMove Up"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$r : Queen()
+		CanMoveOn($r,$s,CanMoveOnType.UP;)
+		$s2 : Square(rank == $startRank + 1, file == $startFile, boardNum == $boardNumS, piece == null)
+		
+	then
+		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.UP));
+end
+
+rule "Queen First CanMove Down"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$r : Queen(this.equals($piece))
+		$s2 : Square(rank == $startRank - 1, file == $startFile, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.DOWN));
+end
+
+
+rule "Queen CanMove Down"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$r : Queen()
+		CanMoveOn($r,$s,CanMoveOnType.DOWN;)
+		$s2 : Square(rank == $startRank - 1, file == $startFile, boardNum == $boardNumS, piece == null)
+		
+	then
+		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.DOWN));
+end
+
+rule "Queen First CanMove Left"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$r : Queen(this.equals($piece))
+		$s2 : Square(rank == $startRank, file == $startFile - 1, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.LEFT));
+end
+
+
+rule "Queen CanMove Left"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$r : Queen()
+		CanMoveOn($r,$s,CanMoveOnType.LEFT;)
+		$s2 : Square(rank == $startRank, file == $startFile - 1, boardNum == $boardNumS, piece == null)
+		
+	then
+		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.LEFT));
+end
+
+
+rule "Queen First CanMove Right"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$r : Queen(this.equals($piece))
+		$s2 : Square(rank == $startRank, file == $startFile + 1, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.RIGHT));
+end
+
+
+rule "Queen CanMove Right"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$r : Queen()
+		CanMoveOn($r,$s,CanMoveOnType.RIGHT;)
+		$s2 : Square(rank == $startRank, file == $startFile + 1, boardNum == $boardNumS, piece == null)
+		
+	then
+		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.RIGHT));
+end
+
+
+rule "Queen First CanMove Right Up Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$b : Queen(this.equals($piece))
+		$s2 : Square(rank == $startRank + 1, file == $startFile + 1, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($b,$s2, CanMoveOnType.RIGHT_UP));
+end
+
+
+rule "Queen CanMove Right Up Diagonal"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$b : Queen()
+		CanMoveOn($b,$s,CanMoveOnType.RIGHT_UP;)
+		$s2 : Square(rank == $startRank + 1, file == $startFile + 1, boardNum == $boardNumS, piece == null)
+		
+	then
+		insertLogical(new CanMoveOn($b,$s2, CanMoveOnType.RIGHT_UP));
+end
+
+
+rule "Queen First CanMove Right Down Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$b : Queen(this.equals($piece))
+		$s2 : Square(rank == $startRank - 1, file == $startFile + 1, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.RIGHT_DOWN));
+end
+
+
+rule "Queen CanMove Right Down Diagonal"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$b : Queen()
+		CanMoveOn($b,$s,CanMoveOnType.RIGHT_DOWN;)
+		$s2 : Square(rank == $startRank - 1, file == $startFile + 1, boardNum == $boardNumS, piece == null)
+	
+	then
+		insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.RIGHT_DOWN));
+end
+
+
+rule "Queen First CanMove Left Up Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$b : Queen(this.equals($piece))
+		$s2 : Square(rank == $startRank + 1, file == $startFile - 1, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_UP));
+end
+
+
+rule "Queen CanMove Left Up Diagonal"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$b : Queen()
+		CanMoveOn($b,$s,CanMoveOnType.LEFT_UP;)
+		$s2 : Square(rank == $startRank + 1, file == $startFile - 1, boardNum == $boardNumS, piece == null)
+		
+	then
+		insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_UP));
+end
+
+rule "Queen First CanMove Left Down Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$b : Queen(this.equals($piece))
+		$s2 : Square(rank == $startRank - 1, file == $startFile - 1, boardNum == $boardNumS, piece == null)
+		
+    then
+    	
+        insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_DOWN));
+end
+
+
+rule "Queen CanMove Left Down Diagonal"
+	when
+		$s : Square($boardNumS : boardNum,  $startRank : rank, $startFile : file)
+		$b : Queen()
+		CanMoveOn($b,$s,CanMoveOnType.LEFT_DOWN;)
+		$s2 : Square(rank == $startRank - 1, file == $startFile - 1, boardNum == $boardNumS, piece == null)
+	then
+		insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_DOWN));
+end
+
+/*
+rule "LAST Queen"
+salience -99
+  when
+  		$r : Queen($boardNumber : boardNum)
+  		CanMoveOn($r,$s,CanMoveOnType.LEFT_DOWN;)
+  		$b : Board(boardNum == $boardNumber, $fen : fen)
+    then
+        System.out.println("Queen Can Move on: " + $s.getSquareText() + " in positionllll: " + $fen);
+
+end
+*/

@@ -113,7 +113,7 @@ rule "Rook IsDefending Right"
 	then
 		insertLogical(new IsDefending($r,$p));
 end
-
+/*
 rule "LAST2"
 salience -99
   when
@@ -125,3 +125,4 @@ salience -99
         System.out.println("Rook color: " + $r.getColor() + " Is Attacking on square: " + $squareText + " in position " + $fen);
 
 end
+*/

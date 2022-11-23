@@ -118,7 +118,7 @@ rule "Bishop IsDefending Left Down Diagonal"
 	then
 		insertLogical(new IsDefending($b,$p));
 end
-
+/*
 rule "LAST3"
 salience -99
   when
@@ -129,3 +129,4 @@ salience -99
         System.out.println("Bishop color: " + $b.getColor() + " Is Defending: " + $p.getColor() + " " + $p.getFEN() + " on square: " + $squareText);
 
 end
+*/

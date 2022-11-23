@@ -117,7 +117,7 @@ rule "Bishop IsAttacking Left Down Diagonal"
 	then
 		insertLogical(new IsAttacking($b,$p));
 end
-
+/*
 rule "LAST2"
 salience -99
   when
@@ -128,3 +128,4 @@ salience -99
         System.out.println("Bishop color: " + $b.getColor() + " Is Attacking: " + $p.getColor() + " " + $p.getFEN() + " on square: " + $squareText);
 
 end
+*/
