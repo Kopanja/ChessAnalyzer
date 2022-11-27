@@ -1,0 +1,131 @@
+//created on: Nov 27, 2022
+package com.knight
+
+//list any import classes here.
+import com.sbnz.chessanalyzer.model.piece.Piece;
+import com.sbnz.chessanalyzer.model.piece.Knight;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.CanMoveOn;
+import com.sbnz.chessanalyzer.model.IsOnPath;
+import com.sbnz.chessanalyzer.model.Board;
+import com.sbnz.chessanalyzer.model.CanMoveOn.CanMoveOnType;
+
+
+//declare any global variables here
+
+
+
+
+rule "Knight Moves UP RIGHT"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece))
+		$moveSquare : Square(rank == $startRank + 2, file == $startFile + 1,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
+    then
+    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+
+end
+
+rule "Knight Moves UP LEFT"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece))
+		$moveSquare : Square(rank == $startRank + 2, file == $startFile - 1,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
+    then
+    	System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+
+end
+
+
+rule "Knight Moves LEFT UP"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece))
+		$moveSquare : Square(rank == $startRank + 1, file == $startFile - 2,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
+    then
+    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+
+end
+
+rule "Knight Moves LEFT DOWN"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece))
+		$moveSquare : Square(rank == $startRank - 1, file == $startFile - 2,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
+    then
+    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+
+end
+
+
+rule "Knight Moves RIGHT UP"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece))
+		$moveSquare : Square(rank == $startRank + 1, file == $startFile + 2,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
+    then
+    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+
+end
+
+rule "Knight Moves RIGHT DOWN"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece))
+		$moveSquare : Square(rank == $startRank - 1, file == $startFile + 2,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
+    then
+    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+
+end
+
+
+rule "Knight Moves DOWN LEFT"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece))
+		$moveSquare : Square(rank == $startRank - 2, file == $startFile - 1,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
+    then
+    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+
+end
+
+rule "Knight Moves DOWN RIGHT"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece))
+		$moveSquare : Square(rank == $startRank - 2, file == $startFile + 1,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
+    then
+    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+
+end
+
+/*
+rule "LAST Knight"
+salience -99
+  when
+  		$s2 : Square($piece : piece, $squareText : squareText)
+  		$r : Knight($boardNumber : boardNum, this.equals($piece))
+  		CanMoveOn($r,$s;)
+  		$b : Board(boardNum == $boardNumber, $fen : fen)
+    then
+        System.out.println($r.getFEN() + " From square " +  $squareText + " Can Move on: " + $s.getSquareText() + " in positionllll: " + $fen + " Board Number " + $boardNumber);
+
+end
+
+*/

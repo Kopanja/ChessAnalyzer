@@ -1,0 +1,143 @@
+//created on: Nov 27, 2022
+package com.knight
+
+//list any import classes here.
+import com.sbnz.chessanalyzer.model.piece.Piece;
+import com.sbnz.chessanalyzer.model.piece.Knight;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.CanMoveOn;
+import com.sbnz.chessanalyzer.model.IsOnPath;
+import com.sbnz.chessanalyzer.model.Board;
+import com.sbnz.chessanalyzer.model.CanMoveOn.CanMoveOnType;
+import com.sbnz.chessanalyzer.model.IsDefending;
+import java.util.List;
+
+
+//declare any global variables here
+
+
+
+rule "Knight Defending UP RIGHT"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece), $color : color)
+		$moveSquare : Square(rank == $startRank + 2, file == $startFile + 1,  $squareText2 : squareText, boardNum == $boardNumS, $piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color) 
+    then
+    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+      	insertLogical(new IsDefending($k,$p));
+
+end
+
+rule "Knight Defending UP LEFT"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece), $color : color)
+		$moveSquare : Square(rank == $startRank + 2, file == $startFile - 1,  $squareText2 : squareText, boardNum == $boardNumS, $piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color) 
+    then
+        insertLogical(new IsDefending($k,$p));
+
+end
+
+
+rule "Knight Defending LEFT UP"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece), $color : color)
+		$moveSquare : Square(rank == $startRank + 1, file == $startFile - 2,  $squareText2 : squareText, boardNum == $boardNumS,  $piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color) 
+    then
+        insertLogical(new IsDefending($k,$p));
+
+end
+
+rule "Knight Defending LEFT DOWN"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece), $color : color)
+		$moveSquare : Square(rank == $startRank - 1, file == $startFile - 2,  $squareText2 : squareText, boardNum == $boardNumS, $piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color) 
+    then
+    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+        insertLogical(new IsDefending($k,$p));
+
+end
+
+
+rule "Knight Defending RIGHT UP"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece), $color : color)
+		$moveSquare : Square(rank == $startRank + 1, file == $startFile + 2,  $squareText2 : squareText, boardNum == $boardNumS, $piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color) 
+    then
+    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+        insertLogical(new IsDefending($k,$p));
+
+end
+
+rule "Knight Defending RIGHT DOWN"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece), $color : color)
+		$moveSquare : Square(rank == $startRank - 1, file == $startFile + 2,  $squareText2 : squareText, boardNum == $boardNumS, $piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color) 
+    then
+    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+        insertLogical(new IsDefending($k,$p));
+
+end
+
+
+rule "Knight Defending DOWN LEFT"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece), $color : color)
+		$moveSquare : Square(rank == $startRank - 2, file == $startFile - 1,  $squareText2 : squareText, boardNum == $boardNumS, $piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color) 
+    then
+    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+        insertLogical(new IsDefending($k,$p));
+
+end
+
+rule "Knight Defending DOWN RIGHT"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : Knight(this.equals($piece), $color : color)
+		$moveSquare : Square(rank == $startRank - 2, file == $startFile + 1,  $squareText2 : squareText, boardNum == $boardNumS, $piece2 : piece)
+		$p : Piece(this.equals($piece2), color == $color) 
+    then
+    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
+       insertLogical(new IsDefending($k,$p));
+
+end
+
+
+rule "LAST2"
+salience -99
+  when
+  		$r : Knight($boardNum : boardNum)
+  		$list : List(size >= 2) from collect(IsDefending($r,$p;))
+  	//	IsDefending($r,$p;)
+  	//	IsDefending($r, $p2;)
+  	//	$s : Square(piece == $p, $squareText : squareText)
+  		$b : Board(boardNum == $boardNum, $fen : fen)
+    then
+        System.out.println("Rook color: " + $r.getColor() + " Is Defending " + $list.size()  + " pieces in position " + $fen);
+
+end
+
+
+
+
+
