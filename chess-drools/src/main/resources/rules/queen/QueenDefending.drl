@@ -23,7 +23,7 @@ rule "Queen First IsDefending Right Up Diagonal"
 		$s2 : Square(rank == $startRank + 1, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($b,$p));
+       insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 
@@ -36,7 +36,7 @@ rule "Queen IsDefending Right Up Diagonal"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($b,$p));
+		insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 
@@ -48,7 +48,7 @@ rule "Queen First IsDefending Right Down Diagonal"
 		$s2 : Square(rank == $startRank - 1, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($b,$p));
+       insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 
@@ -61,7 +61,7 @@ rule "Queen IsDefending Right Down Diagonal"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($b,$p));
+		insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 
@@ -73,7 +73,7 @@ rule "Queen First IsDefending Left Up Diagonal"
 		$s2 : Square(rank == $startRank + 1, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($b,$p));
+       insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 
@@ -86,7 +86,7 @@ rule "Queen IsDefending Left Up Diagonal"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($b,$p));
+		insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 rule "Queen First IsDefending Left Down Diagonal"
@@ -97,7 +97,7 @@ rule "Queen First IsDefending Left Down Diagonal"
 		$s2 : Square(rank == $startRank - 1, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($b,$p));
+       insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 
@@ -110,7 +110,7 @@ rule "Queen IsDefending Left Down Diagonal"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($b,$p));
+		insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 rule "Queen First IsDefending Up"
@@ -121,7 +121,7 @@ rule "Queen First IsDefending Up"
 		$s2 : Square(rank == $startRank + 1, file == $startFile, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($r,$p));
+       insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 
@@ -134,7 +134,7 @@ rule "Queen IsDefending Up"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($r,$p));
+		insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 
@@ -146,7 +146,7 @@ rule "Queen First IsDefending Down"
 		$s2 : Square(rank == $startRank - 1, file == $startFile, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($r,$p));
+       insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 
@@ -159,7 +159,7 @@ rule "Queen IsDefending Down"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($r,$p));
+		insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 rule "Queen First IsDefending Left"
@@ -170,7 +170,7 @@ rule "Queen First IsDefending Left"
 		$s2 : Square(rank == $startRank, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($r,$p));
+       insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 
@@ -183,7 +183,7 @@ rule "Queen IsDefending Left"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($r,$p));
+		insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 rule "Queen First IsDefending Right"
@@ -194,7 +194,7 @@ rule "Queen First IsDefending Right"
 		$s2 : Square(rank == $startRank, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($r,$p));
+       insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 
@@ -207,7 +207,7 @@ rule "Queen IsDefending Right"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($r,$p));
+		insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 /*
 rule "LAST2"

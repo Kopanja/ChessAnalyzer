@@ -3,11 +3,13 @@ package com.sbnz.chessanalyzer.model.piece;
 public class Pawn extends Piece {
 
 	public Pawn(int color) {
+		this.setValue(1);
 		this.setColor(color);
 	}
 
 	public Pawn(int color, int counter) {
 		super(color, counter);
+		this.setValue(1);
 	}
 	@Override
 	public String getFEN() {

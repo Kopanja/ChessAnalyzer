@@ -1,0 +1,61 @@
+//created on: Dec 10, 2022
+package com.pawn
+
+//list any import classes here.
+import com.sbnz.chessanalyzer.model.piece.Piece;
+import com.sbnz.chessanalyzer.model.piece.Pawn;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.CanMoveOn;
+import com.sbnz.chessanalyzer.model.IsOnPath;
+import com.sbnz.chessanalyzer.model.Board;
+import com.sbnz.chessanalyzer.model.CanMoveOn.CanMoveOnType;
+import com.sbnz.chessanalyzer.model.IsDefending;
+import java.util.List;
+
+
+//declare any global variables here
+
+
+
+
+rule "White Pawn Defend Right"
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$p : Pawn(this.equals($piece), color == 0, $color : color)
+		$defendingSquare : Square(rank == $startRank + 1, file == $startFile + 1,  $squareText1 : squareText, boardNum == $boardNumS, $piece1 : piece)
+		$defendedPiece : Piece(this.equals($piece1), color == $color)
+    then
+    	insertLogical(new IsDefending($p,$defendedPiece,$boardNumS));   	
+end
+
+
+rule "White Pawn Defend Left"
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$p : Pawn(this.equals($piece), color == 0, $color : color)
+		$defendingSquare : Square(rank == $startRank + 1, file == $startFile - 1,  $squareText1 : squareText, boardNum == $boardNumS, $piece1 : piece)
+		$defendedPiece : Piece(this.equals($piece1), color == $color)
+    then
+    	insertLogical(new IsDefending($p,$defendedPiece,$boardNumS));   	
+end
+
+rule "Black Pawn Defend Right"
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$p : Pawn(this.equals($piece), color == 1, $color : color)
+		$defendingSquare : Square(rank == $startRank - 1, file == $startFile + 1,  $squareText1 : squareText, boardNum == $boardNumS, $piece1 : piece)
+		$defendedPiece : Piece(this.equals($piece1), color == $color)
+    then
+    	insertLogical(new IsDefending($p,$defendedPiece,$boardNumS));   	
+end
+
+
+rule "Black Pawn Defend Left"
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$p : Pawn(this.equals($piece), color == 1, $color : color)
+		$defendingSquare : Square(rank == $startRank - 1, file == $startFile - 1,  $squareText1 : squareText, boardNum == $boardNumS, $piece1 : piece)
+		$defendedPiece : Piece(this.equals($piece1), color == $color)
+    then
+    	insertLogical(new IsDefending($p,$defendedPiece,$boardNumS));   	
+end

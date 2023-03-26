@@ -1,0 +1,76 @@
+//created on: Dec 10, 2022
+package com.pawn
+
+//list any import classes here.
+
+import com.sbnz.chessanalyzer.model.piece.Piece;
+import com.sbnz.chessanalyzer.model.piece.Pawn;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.CanMoveOn;
+import com.sbnz.chessanalyzer.model.IsOnPath;
+import com.sbnz.chessanalyzer.model.Board;
+import com.sbnz.chessanalyzer.model.CanMoveOn.CanMoveOnType;
+
+//declare any global variables here
+
+
+
+
+rule "White Pawn Double Move"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, rank == 1, $startFile : file, $boardNumS : boardNum) 
+		$p : Pawn(this.equals($piece), color == 0)
+		$moveSquare : Square(rank == 3, file == $startFile,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($p, $moveSquare, CanMoveOnType.PAWN,$boardNumS));
+
+end
+
+
+rule "White Pawn Move"
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$p : Pawn(this.equals($piece), color == 0)
+		$moveSquare : Square(rank == $startRank + 1, file == $startFile,  $squareText1 : squareText, boardNum == $boardNumS, piece == null)
+    then
+    	insertLogical(new CanMoveOn($p, $moveSquare, CanMoveOnType.PAWN,$boardNumS));
+    	
+end
+
+
+rule "Black Pawn Double Move"
+
+    when
+        $s : Square($piece : piece, $squareText : squareText, rank == 6, $startFile : file, $boardNumS : boardNum) 
+		$p : Pawn(this.equals($piece), color == 1)
+		$moveSquare : Square(rank == 4, file == $startFile,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
+    then
+        insertLogical(new CanMoveOn($p, $moveSquare, CanMoveOnType.PAWN,$boardNumS));
+
+end
+
+
+rule "Black Pawn Move"
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$p : Pawn(this.equals($piece), color == 1)
+		$moveSquare : Square(rank == $startRank - 1, file == $startFile,  $squareText1 : squareText, boardNum == $boardNumS, piece == null)
+    then
+    	insertLogical(new CanMoveOn($p, $moveSquare, CanMoveOnType.PAWN,$boardNumS));
+    	
+end
+
+/*
+rule "LAST Pawn"
+salience -99
+  when
+  		$s : Square($piece : piece, $squareText : squareText)
+  		$p : Pawn($boardNumber : boardNum, this.equals($piece), color == 1)
+  		CanMoveOn($p,$s2;)
+  		$b : Board(boardNum == $boardNumber, $fen : fen)
+    then
+        System.out.println($p.getFEN() + " From square " +  $squareText + " Can Move on: " + $s2.getSquareText() + " in positionllll: " + $fen + " Board Number " + $boardNumber);
+
+end
+*/

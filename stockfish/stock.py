@@ -4,6 +4,7 @@ from flask import Flask
 from flask import request
 from flask import json
 from flask_cors import CORS, cross_origin
+from model import StockfishEval, Move
 print("A")
 sto = Stockfish(r"C:\Users\kopan\OneDrive\Desktop\stockfish-11-win\Windows\stockfish_20011801_x64.exe")
 startFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
@@ -12,33 +13,7 @@ board = chess.Board()
 #board.push_uci("f3f4")
 #print(board.fen())
 
-class StockfishEval:
-     def __init__(self, oldFenEval, newFenEval, bestMove, bestMoveFenEval):
-         self.oldFenEval = oldFenEval
-         self.newFenEval = newFenEval
-         self.bestMove = bestMove
-         self.bestMoveFenEval = bestMoveFenEval
 
-
-class Move:
-    def __init__(self, color, fromSquare, toSquare, piece, san, moveNum) -> None:
-        self.color = color
-        self.fromSquare = fromSquare
-        self.toSquare = toSquare
-        self.piece = piece
-        self.san = san
-        self.preMoveEval = 0
-        self.postMoveEval = 0
-        self.bestMoveEvaluation = 0
-        self.bestMove = ""
-        self.fen = ""
-        self.moveNum = moveNum
-    def setStockEval(self, preMoveEval, postMoveEval, bestMove, bestMoveEvaluation, fen):
-        self.preMoveEval = preMoveEval
-        self.postMoveEval = postMoveEval
-        self.bestMoveEvaluation = bestMoveEvaluation
-        self.bestMove = bestMove
-        self.fen = fen
 
 
 app = Flask(__name__)
@@ -101,7 +76,11 @@ def parse_moves(pngMoves):
     move_objects = []
     i = 1
     for move in pngMoves:
-        move_objects.append(Move(color=move['color'], fromSquare=move['from'], toSquare=move['to'], piece=move['piece'], san = move['san'], moveNum=i))
+        capture = None
+        if "captured" in move:
+            capture = move["captured"]
+            print("this will execute")
+        move_objects.append(Move(color=move['color'], fromSquare=move['from'], toSquare=move['to'], piece=move['piece'], san = move['san'], moveNum=i, capture = capture))
         i = i + 1
     return move_objects
 
@@ -110,6 +89,7 @@ def parse_moves(pngMoves):
 def post_moves():
    # print(request.json[0]['from'])
     pngMoves = request.json
+    print(pngMoves)
     move_objects = parse_moves(pngMoves=pngMoves)
     move_objects = stockfish_analysis(move_objects, startFen, sto)
     #mistakes = find_mistakes(pngMoves, startFen, sto)

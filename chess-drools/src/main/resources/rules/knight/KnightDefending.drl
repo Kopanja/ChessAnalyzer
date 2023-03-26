@@ -26,7 +26,7 @@ rule "Knight Defending UP RIGHT"
 		$p : Piece(this.equals($piece2), color == $color) 
     then
     	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-      	insertLogical(new IsDefending($k,$p));
+      	insertLogical(new IsDefending($k,$p,$boardNumS));
 
 end
 
@@ -38,7 +38,7 @@ rule "Knight Defending UP LEFT"
 		$moveSquare : Square(rank == $startRank + 2, file == $startFile - 1,  $squareText2 : squareText, boardNum == $boardNumS, $piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color) 
     then
-        insertLogical(new IsDefending($k,$p));
+        insertLogical(new IsDefending($k,$p,$boardNumS));
 
 end
 
@@ -51,7 +51,7 @@ rule "Knight Defending LEFT UP"
 		$moveSquare : Square(rank == $startRank + 1, file == $startFile - 2,  $squareText2 : squareText, boardNum == $boardNumS,  $piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color) 
     then
-        insertLogical(new IsDefending($k,$p));
+        insertLogical(new IsDefending($k,$p,$boardNumS));
 
 end
 
@@ -64,7 +64,7 @@ rule "Knight Defending LEFT DOWN"
 		$p : Piece(this.equals($piece2), color == $color) 
     then
     	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-        insertLogical(new IsDefending($k,$p));
+        insertLogical(new IsDefending($k,$p,$boardNumS));
 
 end
 
@@ -78,7 +78,7 @@ rule "Knight Defending RIGHT UP"
 		$p : Piece(this.equals($piece2), color == $color) 
     then
     	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-        insertLogical(new IsDefending($k,$p));
+        insertLogical(new IsDefending($k,$p,$boardNumS));
 
 end
 
@@ -91,7 +91,7 @@ rule "Knight Defending RIGHT DOWN"
 		$p : Piece(this.equals($piece2), color == $color) 
     then
     	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-        insertLogical(new IsDefending($k,$p));
+        insertLogical(new IsDefending($k,$p,$boardNumS));
 
 end
 
@@ -105,7 +105,7 @@ rule "Knight Defending DOWN LEFT"
 		$p : Piece(this.equals($piece2), color == $color) 
     then
     	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-        insertLogical(new IsDefending($k,$p));
+        insertLogical(new IsDefending($k,$p,$boardNumS));
 
 end
 
@@ -118,7 +118,7 @@ rule "Knight Defending DOWN RIGHT"
 		$p : Piece(this.equals($piece2), color == $color) 
     then
     	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-       insertLogical(new IsDefending($k,$p));
+       insertLogical(new IsDefending($k,$p,$boardNumS));
 
 end
 
@@ -133,7 +133,7 @@ salience -99
   	//	$s : Square(piece == $p, $squareText : squareText)
   		$b : Board(boardNum == $boardNum, $fen : fen)
     then
-        System.out.println("Rook color: " + $r.getColor() + " Is Defending " + $list.size()  + " pieces in position " + $fen);
+        System.out.println("Knight color: " + $r.getColor() + " Is Defending " + $list.size()  + " pieces in position " + $fen);
 
 end
 

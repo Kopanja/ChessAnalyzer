@@ -23,7 +23,7 @@ rule "Rook First CanMove Up"
 		$r : Rook(this.equals($piece))
 		$s2 : Square(rank == $startRank + 1, file == $startFile, boardNum == $boardNumS, piece == null)
     then
-        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.UP));
+        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.UP,$boardNumS));
 end
 
 
@@ -35,7 +35,7 @@ rule "Rook CanMove Up"
 		$s2 : Square(rank == $startRank + 1, file == $startFile, boardNum == $boardNumS, piece == null)
 		
 	then
-		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.UP));
+		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.UP,$boardNumS));
 end
 
 rule "Rook First CanMove Down"
@@ -45,7 +45,7 @@ rule "Rook First CanMove Down"
 		$r : Rook(this.equals($piece))
 		$s2 : Square(rank == $startRank - 1, file == $startFile, boardNum == $boardNumS, piece == null)
     then
-        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.DOWN));
+        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.DOWN,$boardNumS));
 end
 
 
@@ -57,7 +57,7 @@ rule "Rook CanMove Down"
 		$s2 : Square(rank == $startRank - 1, file == $startFile, boardNum == $boardNumS, piece == null)
 		
 	then
-		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.DOWN));
+		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.DOWN,$boardNumS));
 end
 
 rule "Rook First CanMove Left"
@@ -67,7 +67,7 @@ rule "Rook First CanMove Left"
 		$r : Rook(this.equals($piece))
 		$s2 : Square(rank == $startRank, file == $startFile - 1, boardNum == $boardNumS, piece == null)
     then
-        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.LEFT));
+        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.LEFT,$boardNumS));
 end
 
 
@@ -79,7 +79,7 @@ rule "Rook CanMove Left"
 		$s2 : Square(rank == $startRank, file == $startFile - 1, boardNum == $boardNumS, piece == null)
 		
 	then
-		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.LEFT));
+		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.LEFT,$boardNumS));
 end
 
 
@@ -90,7 +90,7 @@ rule "Rook First CanMove Right"
 		$r : Rook(this.equals($piece))
 		$s2 : Square(rank == $startRank, file == $startFile + 1, boardNum == $boardNumS, piece == null)
     then
-        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.RIGHT));
+        insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.RIGHT,$boardNumS));
 end
 
 
@@ -102,7 +102,7 @@ rule "Rook CanMove Right"
 		$s2 : Square(rank == $startRank, file == $startFile + 1, boardNum == $boardNumS, piece == null)
 		
 	then
-		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.RIGHT));
+		insertLogical(new CanMoveOn($r,$s2, CanMoveOnType.RIGHT,$boardNumS));
 end
 /*
 rule "LAST Rook"

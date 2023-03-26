@@ -130,6 +130,7 @@ def create_stockfish_lines(startFen,stockfish):
     line = []
     lineEval = []
     for i in range(12):
+        print("AAAAAA")
         stockfish.set_fen_position(board.fen())
         #print("StockfishEval: ", stockfish.get_evaluation()['value'])
         lineEval.append(stockfish.get_evaluation()['value'])
@@ -170,5 +171,6 @@ startFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 #test_board_san(pngMoves, startFen)
 
 test_nesto(pngMoves, startFen,sto)
+print("Gorov")
 #print(sto.get_board_visual())
 

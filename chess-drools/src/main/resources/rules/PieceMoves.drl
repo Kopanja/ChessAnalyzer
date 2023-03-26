@@ -17,7 +17,6 @@ import com.sbnz.chessanalyzer.model.Board;
 
 
 
-
 rule "LAST"
 salience -100
   when

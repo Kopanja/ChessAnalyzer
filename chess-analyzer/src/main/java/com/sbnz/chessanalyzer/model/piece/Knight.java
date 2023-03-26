@@ -4,11 +4,13 @@ public class Knight extends Piece{
 
 	
 	public Knight(int color) {
+		this.setValue(3);
 		this.setColor(color);
 	}
 	
 	public Knight(int color, int counter) {
 		super(color, counter);
+		this.setValue(3);
 	}
 
 	@Override

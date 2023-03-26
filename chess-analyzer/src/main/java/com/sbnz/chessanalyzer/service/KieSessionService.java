@@ -3,11 +3,10 @@ package com.sbnz.chessanalyzer.service;
 
 import java.util.List;
 
-import com.sbnz.chessanalyzer.model.Board;
 import com.sbnz.chessanalyzer.model.Message;
 import com.sbnz.chessanalyzer.model.Move;
-import com.sbnz.chessanalyzer.model.Square;
-import com.sbnz.chessanalyzer.model.piece.Piece;
+import com.sbnz.chessanalyzer.model.stock_drools.AnalysisObject;
+import com.sbnz.chessanalyzer.model.stock_drools.StockMove;
 import com.sbnz.chessanalyzer.util.FENParser;
 
 import org.kie.api.runtime.KieContainer;
@@ -62,6 +61,21 @@ public class KieSessionService {
 	public void insertBoard(String fen) {
 		kSession.insert(FENParser.parse(fen, 0));
 		kSession.fireAllRules();
+	}
+	
+	public void insertOneMove(AnalysisObject obj) {
+		System.out.println("USAO");
+		kSession.insert(FENParser.parse(obj.getPreMoveFen(), 0));
+		kSession.insert(FENParser.parse(obj.getPreMoveFen(), 1));
+		kSession.fireAllRules();
+		System.out.println("---------------------DOne------------------------------------------");
+		kSession.insert(obj.getMove());
+		kSession.fireAllRules();
+		for(StockMove move : obj.getPostMoveLine()) {
+			move.setBoardNum(0);
+			kSession.insert(move);
+			kSession.fireAllRules();
+		}
 	}
 
 	

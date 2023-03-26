@@ -41,7 +41,7 @@ rule "Bishop IsAttacking Right Up Diagonal"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($b,$p));
+		insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 
 
@@ -53,7 +53,7 @@ rule "Bishop First IsAttacking Right Down Diagonal"
 		$s2 : Square(rank == $startRank - 1, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($b,$p));
+       insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 
 
@@ -66,7 +66,7 @@ rule "Bishop IsAttacking Right Down Diagonal"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($b,$p));
+		insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 
 
@@ -78,7 +78,7 @@ rule "Bishop First IsAttacking Left Up Diagonal"
 		$s2 : Square(rank == $startRank + 1, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($b,$p));
+       insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 
 
@@ -91,7 +91,7 @@ rule "Bishop IsAttacking Left Up Diagonal"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($b,$p));
+		insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 
 rule "Bishop First IsAttacking Left Down Diagonal"
@@ -102,7 +102,7 @@ rule "Bishop First IsAttacking Left Down Diagonal"
 		$s2 : Square(rank == $startRank - 1, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($b,$p));
+       insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 
 
@@ -115,7 +115,7 @@ rule "Bishop IsAttacking Left Down Diagonal"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($b,$p));
+		insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 /*
 rule "LAST2"

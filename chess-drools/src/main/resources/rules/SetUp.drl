@@ -1,0 +1,76 @@
+//created on: Feb 18, 2023
+package rules
+import com.sbnz.chessanalyzer.model.stock_drools.StockMove;
+import com.sbnz.chessanalyzer.model.Board;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.piece.Piece;
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+
+
+
+rule "Make Capture"
+	//salience -100
+	no-loop
+    when
+        $b : Board($boardNum : boardNum)
+        $sm : StockMove($fromSquare : fromSquare, $toSquare : toSquare, $san : san, boardNum == $boardNum)
+        $fromS : Square(squareText.equals($fromSquare), $piece1 : piece, boardNum == $boardNum)
+        $p1 : Piece(this.equals($piece1))
+        $toS : Square(squareText.equals($toSquare), $piece2 : piece, boardNum == $boardNum)
+        $p2 : Piece(this.equals($piece2))
+    then
+    	System.out.println("Make Capture Rule");
+    	System.out.println($san);
+         modify($toS){setPiece($p1)}
+         modify($fromS){setPiece(null)}
+         retract($p2)
+         retract($sm)
+end
+
+
+rule "Make Move"
+	//salience -100
+	no-loop
+    when
+        $b : Board($boardNum : boardNum)
+        $sm : StockMove($fromSquare : fromSquare, $toSquare : toSquare, $san : san, boardNum == $boardNum)
+        $fromS : Square(squareText.equals($fromSquare), $piece1 : piece, boardNum == $boardNum)
+        $p1 : Piece(this.equals($piece1))
+        $toS : Square(squareText.equals($toSquare), piece == null, boardNum == $boardNum)
+    then
+    	System.out.println("Make Move Rule");
+    	System.out.println($san);
+         modify($toS){setPiece($p1)}
+         modify($fromS){setPiece(null)}
+         retract($sm)
+end
+
+rule "Black Material"
+salience -9999
+when
+	Board($fen : fen, $boardNum : boardNum)
+    $totalMaterial : Number() from accumulate(
+       Piece(color == 1, $value : value, boardNum == $boardNum),
+       sum($value)
+    )                       
+then
+    System.out.println("Black player has Material value of " + $totalMaterial + " In Position " + $fen);
+end
+
+rule "White Material"
+salience -9999
+when
+	Board($fen : fen, $boardNum : boardNum)
+   	$totalMaterial : Number() from accumulate(
+       Piece(color == 0, $value : value, boardNum == $boardNum),
+       sum($value)
+    )                       
+then
+    System.out.println("White player has Material value of " + $totalMaterial + " In Position " + $fen);
+end
+

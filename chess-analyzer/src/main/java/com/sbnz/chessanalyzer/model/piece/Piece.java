@@ -8,6 +8,7 @@ import com.sbnz.chessanalyzer.model.Square;
 public abstract class Piece {
 
 	private int color;
+	private int value;
 	private int boardNum;
 	private List<Square> canMoveOn;
 	
@@ -23,6 +24,15 @@ public abstract class Piece {
 		super();
 		this.color = color;
 		this.boardNum = boardNum;
+	}
+	
+	
+	public Piece(int color, int value, int boardNum, List<Square> canMoveOn) {
+		super();
+		this.color = color;
+		this.value = value;
+		this.boardNum = boardNum;
+		this.canMoveOn = canMoveOn;
 	}
 	public int getColor() {
 		return color;
@@ -44,6 +54,14 @@ public abstract class Piece {
 	}
 	public void setCanMoveOn(List<Square> canMoveOn) {
 		this.canMoveOn = canMoveOn;
+	}
+	
+	
+	public int getValue() {
+		return value;
+	}
+	public void setValue(int value) {
+		this.value = value;
 	}
 	public abstract String getFEN();
 	

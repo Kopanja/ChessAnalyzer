@@ -1,0 +1,119 @@
+//created on: Dec 10, 2022
+package com.king
+
+//list any import classes here.
+import com.sbnz.chessanalyzer.model.piece.Piece;
+import com.sbnz.chessanalyzer.model.piece.King;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.CanMoveOn;
+import com.sbnz.chessanalyzer.model.IsOnPath;
+import com.sbnz.chessanalyzer.model.Board;
+import com.sbnz.chessanalyzer.model.CanMoveOn.CanMoveOnType;
+import com.sbnz.chessanalyzer.model.IsAttacking;
+
+
+//declare any global variables here
+
+
+
+
+rule "King IsAttacking Right Up Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : King(this.equals($piece), $color : color)
+		$s2 : Square(rank == $startRank + 1, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
+		$p : Piece(this.equals($piece2), color != $color)    
+	then
+       insertLogical(new IsAttacking($k,$p,$boardNumS));
+end
+
+rule "King IsAttacking Right Down Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : King(this.equals($piece), $color : color)
+		$s2 : Square(rank == $startRank - 1, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
+		$p : Piece(this.equals($piece2), color != $color)    
+	then
+       insertLogical(new IsAttacking($k,$p,$boardNumS));
+end
+
+rule "King IsAttacking Left Up Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : King(this.equals($piece),$color : color)
+		$s2 : Square(rank == $startRank + 1, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
+		$p : Piece(this.equals($piece2), color != $color)    
+	then
+       insertLogical(new IsAttacking($k,$p,$boardNumS));
+end
+
+rule "King IsAttacking Left Down Diagonal"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : King(this.equals($piece),$color : color)
+		$s2 : Square(rank == $startRank - 1, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
+		$p : Piece(this.equals($piece2), color != $color)    
+	then
+       insertLogical(new IsAttacking($k,$p,$boardNumS));
+end
+
+rule "King IsAttacking Up"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : King(this.equals($piece), $color : color)
+		$s2 : Square(rank == $startRank + 1, file == $startFile, boardNum == $boardNumS,$piece2 : piece)
+		$p : Piece(this.equals($piece2), color != $color)    
+	then
+       insertLogical(new IsAttacking($k,$p,$boardNumS));
+end
+
+rule "King IsAttacking Down"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : King(this.equals($piece), $color : color)
+		$s2 : Square(rank == $startRank - 1, file == $startFile, boardNum == $boardNumS,$piece2 : piece)
+		$p : Piece(this.equals($piece2), color != $color)    
+	then
+       insertLogical(new IsAttacking($k,$p,$boardNumS));
+end
+
+rule "King IsAttacking Left"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : King(this.equals($piece), $color : color)
+		$s2 : Square(rank == $startRank, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
+		$p : Piece(this.equals($piece2), color != $color)    
+	then
+       insertLogical(new IsAttacking($k,$p,$boardNumS));
+end
+
+rule "King IsAttacking Right"
+
+    when
+    	$s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$k : King(this.equals($piece), $color : color)
+		$s2 : Square(rank == $startRank, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
+		$p : Piece(this.equals($piece2), color != $color)    
+	then
+       insertLogical(new IsAttacking($k,$p,$boardNumS));
+end
+/*
+rule "LAST2"
+salience -99
+  when
+  		$r : King($boardNum : boardNum)
+  		IsAttacking($r,$p;)
+  		$s : Square(piece == $p, $squareText : squareText)
+  		$b : Board(boardNum == $boardNum, $fen : fen)
+    then
+        System.out.println("Rook color: " + $r.getColor() + " Is Attacking on square: " + $squareText + " in position " + $fen);
+
+end
+*/

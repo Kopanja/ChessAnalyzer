@@ -25,7 +25,7 @@ rule "Rook First IsAttacking Up"
 		$s2 : Square(rank == $startRank + 1, file == $startFile, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($r,$p));
+       insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 
@@ -38,7 +38,7 @@ rule "Rook IsAttacking Up"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($r,$p));
+		insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 
@@ -50,7 +50,7 @@ rule "Rook First IsAttacking Down"
 		$s2 : Square(rank == $startRank - 1, file == $startFile, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($r,$p));
+       insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 
@@ -63,7 +63,7 @@ rule "Rook IsAttacking Down"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($r,$p));
+		insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 rule "Rook First IsAttacking Left"
@@ -74,7 +74,7 @@ rule "Rook First IsAttacking Left"
 		$s2 : Square(rank == $startRank, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($r,$p));
+       insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 
@@ -87,7 +87,7 @@ rule "Rook IsAttacking Left"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($r,$p));
+		insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 rule "Rook First IsAttacking Right"
@@ -98,7 +98,7 @@ rule "Rook First IsAttacking Right"
 		$s2 : Square(rank == $startRank, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($r,$p));
+       insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 
@@ -111,7 +111,7 @@ rule "Rook IsAttacking Right"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($r,$p));
+		insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 

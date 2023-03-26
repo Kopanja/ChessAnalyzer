@@ -29,7 +29,7 @@ rule "Bishop First IsDefending Right Up Diagonal"
 		$s2 : Square(rank == $startRank + 1, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($b,$p));
+       insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 
@@ -42,7 +42,7 @@ rule "Bishop IsDefending Right Up Diagonal"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($b,$p));
+		insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 
@@ -54,7 +54,7 @@ rule "Bishop First IsDefending Right Down Diagonal"
 		$s2 : Square(rank == $startRank - 1, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($b,$p));
+       insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 
@@ -67,7 +67,7 @@ rule "Bishop IsDefending Right Down Diagonal"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($b,$p));
+		insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 
@@ -79,7 +79,7 @@ rule "Bishop First IsDefending Left Up Diagonal"
 		$s2 : Square(rank == $startRank + 1, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($b,$p));
+       insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 
@@ -92,7 +92,7 @@ rule "Bishop IsDefending Left Up Diagonal"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($b,$p));
+		insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 rule "Bishop First IsDefending Left Down Diagonal"
@@ -103,7 +103,7 @@ rule "Bishop First IsDefending Left Down Diagonal"
 		$s2 : Square(rank == $startRank - 1, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($b,$p));
+       insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 
 
@@ -116,7 +116,7 @@ rule "Bishop IsDefending Left Down Diagonal"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($b,$p));
+		insertLogical(new IsDefending($b,$p,$boardNumS));
 end
 /*
 rule "LAST3"

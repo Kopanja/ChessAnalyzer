@@ -25,7 +25,7 @@ rule "Rook First IsDefending Up"
 		$s2 : Square(rank == $startRank + 1, file == $startFile, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($r,$p));
+       insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 
@@ -38,7 +38,7 @@ rule "Rook IsDefending Up"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($r,$p));
+		insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 
@@ -50,7 +50,7 @@ rule "Rook First IsDefending Down"
 		$s2 : Square(rank == $startRank - 1, file == $startFile, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($r,$p));
+       insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 
@@ -63,7 +63,7 @@ rule "Rook IsDefending Down"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($r,$p));
+		insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 rule "Rook First IsDefending Left"
@@ -74,7 +74,7 @@ rule "Rook First IsDefending Left"
 		$s2 : Square(rank == $startRank, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($r,$p));
+       insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 
@@ -87,7 +87,7 @@ rule "Rook IsDefending Left"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($r,$p));
+		insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 rule "Rook First IsDefending Right"
@@ -98,7 +98,7 @@ rule "Rook First IsDefending Right"
 		$s2 : Square(rank == $startRank, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color == $color)    
 	then
-       insertLogical(new IsDefending($r,$p));
+       insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 
 
@@ -111,7 +111,7 @@ rule "Rook IsDefending Right"
 		$p : Piece(this.equals($piece2), color == $color)
 		
 	then
-		insertLogical(new IsDefending($r,$p));
+		insertLogical(new IsDefending($r,$p,$boardNumS));
 end
 /*
 rule "LAST2"

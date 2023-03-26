@@ -24,7 +24,7 @@ rule "Bishop First CanMove Right Up Diagonal"
 		$b : Bishop(this.equals($piece))
 		$s2 : Square(rank == $startRank + 1, file == $startFile + 1, boardNum == $boardNumS, piece == null)
     then
-        insertLogical(new CanMoveOn($b,$s2, CanMoveOnType.RIGHT_UP));
+        insertLogical(new CanMoveOn($b,$s2, CanMoveOnType.RIGHT_UP,$boardNumS));
 end
 
 
@@ -36,7 +36,7 @@ rule "Bishop CanMove Right Up Diagonal"
 		$s2 : Square(rank == $startRank + 1, file == $startFile + 1, boardNum == $boardNumS, piece == null)
 		
 	then
-		insertLogical(new CanMoveOn($b,$s2, CanMoveOnType.RIGHT_UP));
+		insertLogical(new CanMoveOn($b,$s2, CanMoveOnType.RIGHT_UP,$boardNumS));
 end
 
 
@@ -47,7 +47,7 @@ rule "Bishop First CanMove Right Down Diagonal"
 		$b : Bishop(this.equals($piece))
 		$s2 : Square(rank == $startRank - 1, file == $startFile + 1, boardNum == $boardNumS, piece == null)
     then
-        insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.RIGHT_DOWN));
+        insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.RIGHT_DOWN,$boardNumS));
 end
 
 
@@ -59,7 +59,7 @@ rule "Bishop CanMove Right Down Diagonal"
 		$s2 : Square(rank == $startRank - 1, file == $startFile + 1, boardNum == $boardNumS, piece == null)
 	
 	then
-		insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.RIGHT_DOWN));
+		insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.RIGHT_DOWN,$boardNumS));
 end
 
 
@@ -70,7 +70,7 @@ rule "Bishop First CanMove Left Up Diagonal"
 		$b : Bishop(this.equals($piece))
 		$s2 : Square(rank == $startRank + 1, file == $startFile - 1, boardNum == $boardNumS, piece == null)
     then
-        insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_UP));
+        insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_UP,$boardNumS));
 end
 
 
@@ -82,7 +82,7 @@ rule "Bishop CanMove Left Up Diagonal"
 		$s2 : Square(rank == $startRank + 1, file == $startFile - 1, boardNum == $boardNumS, piece == null)
 		
 	then
-		insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_UP));
+		insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_UP,$boardNumS));
 end
 
 rule "Bishop First CanMove Left Down Diagonal"
@@ -94,7 +94,7 @@ rule "Bishop First CanMove Left Down Diagonal"
 		
     then
     	
-        insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_DOWN));
+        insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_DOWN,$boardNumS));
 end
 
 
@@ -105,7 +105,7 @@ rule "Bishop CanMove Left Down Diagonal"
 		CanMoveOn($b,$s,CanMoveOnType.LEFT_DOWN;)
 		$s2 : Square(rank == $startRank - 1, file == $startFile - 1, boardNum == $boardNumS, piece == null)
 	then
-		insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_DOWN));
+		insertLogical(new CanMoveOn($b,$s2,CanMoveOnType.LEFT_DOWN,$boardNumS));
 end
 
 /*

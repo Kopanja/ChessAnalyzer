@@ -16,6 +16,10 @@ public class CanMoveOn {
 	@Position(2)
 	private CanMoveOnType type;
 	
+	@Position(3)
+	private int boardNum;
+	
+	
 	public CanMoveOn() {
 		super();
 	}
@@ -35,6 +39,16 @@ public class CanMoveOn {
 		this.piece = piece;
 		this.square = square;
 		this.type = type;
+	}
+
+
+
+	public CanMoveOn(Piece piece, Square square, CanMoveOnType type, int boardNum) {
+		super();
+		this.piece = piece;
+		this.square = square;
+		this.type = type;
+		this.boardNum = boardNum;
 	}
 
 
@@ -76,13 +90,25 @@ public class CanMoveOn {
 
 
 
+	public int getBoardNum() {
+		return boardNum;
+	}
+
+
+
+	public void setBoardNum(int boardNum) {
+		this.boardNum = boardNum;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "CanMoveOn [piece=" + piece + ", square=" + square + "]";
 	}
 	
 	public enum CanMoveOnType {
-        RIGHT_UP, LEFT_UP, RIGHT_DOWN, LEFT_DOWN, KNIGHT, UP, DOWN, LEFT, RIGHT;
+        RIGHT_UP, LEFT_UP, RIGHT_DOWN, LEFT_DOWN, KNIGHT, UP, DOWN, LEFT, RIGHT, PAWN;
     }
 
 	

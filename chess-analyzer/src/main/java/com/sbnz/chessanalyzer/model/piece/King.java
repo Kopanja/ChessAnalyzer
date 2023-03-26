@@ -4,11 +4,13 @@ public class King extends Piece{
 
 	
 	public King(int color) {
+		this.setValue(0);
 		this.setColor(color);
 	}
 	
 	public King(int color, int counter) {
 		super(color, counter);
+		this.setValue(0);
 	}
 	@Override
 	public String getFEN() {

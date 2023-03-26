@@ -24,9 +24,8 @@ rule "Queen First IsAttacking Right Up Diagonal"
 		$s2 : Square(rank == $startRank + 1, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($b,$p));
+       insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
-
 
 rule "Queen IsAttacking Right Up Diagonal"
 	when
@@ -37,7 +36,7 @@ rule "Queen IsAttacking Right Up Diagonal"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($b,$p));
+		insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 
 
@@ -49,7 +48,7 @@ rule "Queen First IsAttacking Right Down Diagonal"
 		$s2 : Square(rank == $startRank - 1, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($b,$p));
+       insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 
 
@@ -62,7 +61,7 @@ rule "Queen IsAttacking Right Down Diagonal"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($b,$p));
+		insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 
 
@@ -74,7 +73,7 @@ rule "Queen First IsAttacking Left Up Diagonal"
 		$s2 : Square(rank == $startRank + 1, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($b,$p));
+       insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 
 
@@ -87,7 +86,7 @@ rule "Queen IsAttacking Left Up Diagonal"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($b,$p));
+		insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 
 rule "Queen First IsAttacking Left Down Diagonal"
@@ -98,7 +97,7 @@ rule "Queen First IsAttacking Left Down Diagonal"
 		$s2 : Square(rank == $startRank - 1, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($b,$p));
+       insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 
 
@@ -111,7 +110,7 @@ rule "Queen IsAttacking Left Down Diagonal"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($b,$p));
+		insertLogical(new IsAttacking($b,$p,$boardNumS));
 end
 
 rule "Queen First IsAttacking Up"
@@ -122,7 +121,7 @@ rule "Queen First IsAttacking Up"
 		$s2 : Square(rank == $startRank + 1, file == $startFile, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($r,$p));
+       insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 
@@ -135,7 +134,7 @@ rule "Queen IsAttacking Up"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($r,$p));
+		insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 
@@ -147,7 +146,7 @@ rule "Queen First IsAttacking Down"
 		$s2 : Square(rank == $startRank - 1, file == $startFile, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($r,$p));
+       insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 
@@ -160,7 +159,7 @@ rule "Queen IsAttacking Down"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($r,$p));
+		insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 rule "Queen First IsAttacking Left"
@@ -171,7 +170,7 @@ rule "Queen First IsAttacking Left"
 		$s2 : Square(rank == $startRank, file == $startFile - 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($r,$p));
+       insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 
@@ -184,7 +183,7 @@ rule "Queen IsAttacking Left"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($r,$p));
+		insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 rule "Queen First IsAttacking Right"
@@ -195,7 +194,7 @@ rule "Queen First IsAttacking Right"
 		$s2 : Square(rank == $startRank, file == $startFile + 1, boardNum == $boardNumS,$piece2 : piece)
 		$p : Piece(this.equals($piece2), color != $color)    
 	then
-       insertLogical(new IsAttacking($r,$p));
+       insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 
@@ -208,7 +207,7 @@ rule "Queen IsAttacking Right"
 		$p : Piece(this.equals($piece2), color != $color)
 		
 	then
-		insertLogical(new IsAttacking($r,$p));
+		insertLogical(new IsAttacking($r,$p,$boardNumS));
 end
 
 /*

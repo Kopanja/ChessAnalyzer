@@ -1,0 +1,60 @@
+//created on: Dec 10, 2022
+package com.pawn
+
+//list any import classes here.
+
+import com.sbnz.chessanalyzer.model.piece.Piece;
+import com.sbnz.chessanalyzer.model.piece.Pawn;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.CanMoveOn;
+import com.sbnz.chessanalyzer.model.IsOnPath;
+import com.sbnz.chessanalyzer.model.Board;
+import com.sbnz.chessanalyzer.model.CanMoveOn.CanMoveOnType;
+import com.sbnz.chessanalyzer.model.IsAttacking;
+
+//declare any global variables here
+
+
+
+
+rule "White Pawn Attack Right"
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$p : Pawn(this.equals($piece), color == 0, $color : color)
+		$attackSquare : Square(rank == $startRank + 1, file == $startFile + 1,  $squareText1 : squareText, boardNum == $boardNumS, $piece1 : piece)
+		$attackedPiece : Piece(this.equals($piece1), color != $color)
+    then
+    	insertLogical(new IsAttacking($p,$attackedPiece,$boardNumS));   	
+end
+
+
+rule "White Pawn Attack Left"
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$p : Pawn(this.equals($piece), color == 0, $color : color)
+		$attackSquare : Square(rank == $startRank + 1, file == $startFile - 1,  $squareText1 : squareText, boardNum == $boardNumS, $piece1 : piece)
+		$attackedPiece : Piece(this.equals($piece1), color != $color)
+    then
+    	insertLogical(new IsAttacking($p,$attackedPiece,$boardNumS));   	
+end
+
+rule "Black Pawn Attack Right"
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$p : Pawn(this.equals($piece), color == 1, $color : color)
+		$attackSquare : Square(rank == $startRank - 1, file == $startFile + 1,  $squareText1 : squareText, boardNum == $boardNumS, $piece1 : piece)
+		$attackedPiece : Piece(this.equals($piece1), color != $color)
+    then
+    	insertLogical(new IsAttacking($p,$attackedPiece,$boardNumS));   	
+end
+
+
+rule "Black Pawn Attack Left"
+    when
+        $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
+		$p : Pawn(this.equals($piece), color == 1, $color : color)
+		$attackSquare : Square(rank == $startRank - 1, file == $startFile - 1,  $squareText1 : squareText, boardNum == $boardNumS, $piece1 : piece)
+		$attackedPiece : Piece(this.equals($piece1), color != $color)
+    then
+    	insertLogical(new IsAttacking($p,$attackedPiece,$boardNumS));   	
+end

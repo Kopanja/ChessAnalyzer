@@ -1,59 +1,75 @@
 package com.sbnz.chessanalyzer.model;
 
-
-
+import com.sbnz.chessanalyzer.model.piece.King;
 import com.sbnz.chessanalyzer.model.piece.Piece;
 
 import org.kie.api.definition.type.Position;
 
-public class IsAttacking {
+public class IsChecking {
 
 	@Position(0)
 	private Piece attackingPiece;
 	
 	@Position(1)
-	private Piece attackedPiece;
-
+	private King king;
+	
 	@Position(2)
 	private int boardNum;
 	
-	public IsAttacking() {
+
+	public IsChecking() {
 		super();
 	}
 
-	public IsAttacking(Piece attackingPiece, Piece attackedPiece) {
+
+
+	public IsChecking(Piece attackingPiece, King king) {
 		super();
 		this.attackingPiece = attackingPiece;
-		this.attackedPiece = attackedPiece;
+		this.king = king;
 	}
+
 
 	
-	public IsAttacking(Piece attackingPiece, Piece attackedPiece, int boardNum) {
+
+	public IsChecking(Piece attackingPiece, King king, int boardNum) {
 		super();
 		this.attackingPiece = attackingPiece;
-		this.attackedPiece = attackedPiece;
+		this.king = king;
 		this.boardNum = boardNum;
 	}
+
+
 
 	public Piece getAttackingPiece() {
 		return attackingPiece;
 	}
 
+
+
 	public void setAttackingPiece(Piece attackingPiece) {
 		this.attackingPiece = attackingPiece;
 	}
 
-	public Piece getAttackedPiece() {
-		return attackedPiece;
+
+
+	public King getKing() {
+		return king;
 	}
 
-	public void setAttackedPiece(Piece attackedPiece) {
-		this.attackedPiece = attackedPiece;
+
+
+	public void setKing(King king) {
+		this.king = king;
 	}
+
+
 
 	public int getBoardNum() {
 		return boardNum;
 	}
+
+
 
 	public void setBoardNum(int boardNum) {
 		this.boardNum = boardNum;

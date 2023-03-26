@@ -12,6 +12,10 @@ public class IsDefending {
 	@Position(1)
 	private Piece defendedPiece;
 
+	@Position(2)
+	private int boardNum;
+	
+	
 	public IsDefending() {
 		super();
 	}
@@ -20,6 +24,14 @@ public class IsDefending {
 		super();
 		this.defendingPiece = defendingPiece;
 		this.defendedPiece = defendedPiece;
+	}
+
+	
+	public IsDefending(Piece defendingPiece, Piece defendedPiece, int boardNum) {
+		super();
+		this.defendingPiece = defendingPiece;
+		this.defendedPiece = defendedPiece;
+		this.boardNum = boardNum;
 	}
 
 	public Piece getDefendingPiece() {
@@ -36,6 +48,14 @@ public class IsDefending {
 
 	public void setDefendedPiece(Piece defendedPiece) {
 		this.defendedPiece = defendedPiece;
+	}
+
+	public int getBoardNum() {
+		return boardNum;
+	}
+
+	public void setBoardNum(int boardNum) {
+		this.boardNum = boardNum;
 	}
 	
 	

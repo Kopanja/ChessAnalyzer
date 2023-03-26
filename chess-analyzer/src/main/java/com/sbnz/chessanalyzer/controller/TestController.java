@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.sbnz.chessanalyzer.dto.FenDTO;
 import com.sbnz.chessanalyzer.model.Move;
+import com.sbnz.chessanalyzer.model.stock_drools.AnalysisObject;
 import com.sbnz.chessanalyzer.service.KieSessionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class TestController {
 	
 	@RequestMapping(value = "/post-moves", method = RequestMethod.POST)
 	public ResponseEntity<?> postMoves(@RequestBody List<Move> moves) {
+		System.out.println(moves);
 		kieSessionService.insertMoves(moves);
 	
 		return new ResponseEntity<>("OK2", HttpStatus.OK);
@@ -49,6 +51,13 @@ public class TestController {
 	public ResponseEntity<?> postFen(@RequestBody FenDTO fen) {
 		System.out.println(fen.getFen());
 		kieSessionService.insertBoard(fen.getFen());
+	
+		return new ResponseEntity<>("OK2", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/post-one-move", method = RequestMethod.POST)
+	public ResponseEntity<?> postOneMove(@RequestBody AnalysisObject obj) {
+		kieSessionService.insertOneMove(obj);
 	
 		return new ResponseEntity<>("OK2", HttpStatus.OK);
 	}

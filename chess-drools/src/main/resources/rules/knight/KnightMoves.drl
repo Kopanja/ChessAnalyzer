@@ -24,7 +24,7 @@ rule "Knight Moves UP RIGHT"
 		$moveSquare : Square(rank == $startRank + 2, file == $startFile + 1,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
     then
     	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT,$boardNumS));
 
 end
 
@@ -36,7 +36,7 @@ rule "Knight Moves UP LEFT"
 		$moveSquare : Square(rank == $startRank + 2, file == $startFile - 1,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
     then
     	System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT,$boardNumS));
 
 end
 
@@ -49,7 +49,7 @@ rule "Knight Moves LEFT UP"
 		$moveSquare : Square(rank == $startRank + 1, file == $startFile - 2,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
     then
     	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT,$boardNumS));
 
 end
 
@@ -61,7 +61,7 @@ rule "Knight Moves LEFT DOWN"
 		$moveSquare : Square(rank == $startRank - 1, file == $startFile - 2,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
     then
     	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT,$boardNumS));
 
 end
 
@@ -74,7 +74,7 @@ rule "Knight Moves RIGHT UP"
 		$moveSquare : Square(rank == $startRank + 1, file == $startFile + 2,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
     then
     	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT,$boardNumS));
 
 end
 
@@ -86,7 +86,7 @@ rule "Knight Moves RIGHT DOWN"
 		$moveSquare : Square(rank == $startRank - 1, file == $startFile + 2,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
     then
     	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT,$boardNumS));
 
 end
 
@@ -99,7 +99,7 @@ rule "Knight Moves DOWN LEFT"
 		$moveSquare : Square(rank == $startRank - 2, file == $startFile - 1,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
     then
     	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT,$boardNumS));
 
 end
 
@@ -111,7 +111,7 @@ rule "Knight Moves DOWN RIGHT"
 		$moveSquare : Square(rank == $startRank - 2, file == $startFile + 1,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
     then
     	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
-        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT));
+        insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT,$boardNumS));
 
 end
 

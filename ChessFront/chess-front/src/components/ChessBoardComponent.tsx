@@ -14,39 +14,44 @@ const ChessBoardComponent = () => {
     
 
 
+    //---------FOR CHESS ANALYZING--------------------------------------------------------
+  
   const extractPGN = () => {
+   
     const fullString = location.state?.data.pgn;
     const pgnOnly = fullString.split('\n')[22];
-    game.loadPgn(pgnOnly);
-    console.log("AAAAAAAAAAAAAAAAAAAA");
-    console.log(game.history({ verbose: true }));
+    console.log(location.state?.data)
+    
+    //ovo ce mozda trebati ali nisam sig
+    //game.loadPgn(pgnOnly);
+    
+    
     const moves = [];
     const pgnList = pgnOnly.split(" ")
-    console.log(pgnList);
+    
     for (let i = 1; i < pgnList.length; i+= 4){
       moves.push(pgnList[i]);
     }
-    
-    console.log(location.state?.data);
-    console.log(moves);
     return moves;
   }
   
-  
   const moves = extractPGN();
   
+ 
   const sendMoves = () => {
     /*
     axios.post("http://localhost:5000/post-moves", moves).then((res) => {
       console.log(res.data);
     })
+    axios.post("http://localhost:5000/post-moves-saved-data", game.history({ verbose: true })
     */
-    
-    axios.post("http://localhost:5000/post-moves-saved-data", game.history({ verbose: true })).then((res) => {
+    console.log( game.history({ verbose: true }), "a")
+    axios.post("http://localhost:5000/post-moves",game.history({ verbose: true })).then((res) => {
       console.log("Stockfish zavrsio");
+      console.log(res.data)
       axios.post("http://localhost:8080/api/test/post-moves", res.data).then((res) => {
         console.log("Drools zavrsio");
-      console.log(res.data);
+     // console.log(res.data);
     })
     })
     
@@ -54,10 +59,7 @@ const ChessBoardComponent = () => {
   
   const makeAMove = (move : {from : string, to : string}) => {
         
-        console.log(move.from);
-        console.log(move.to);
         const currentMove = game.move(move);
-        //setGame(gameCopy);
         setGame(game);
         
         console.log(currentMove);
@@ -65,41 +67,64 @@ const ChessBoardComponent = () => {
         return currentMove;
     }
     const onDrop = (sourceSquare : string, targetSquare : string) => {
-        console.log(fen);
-        console.log(sourceSquare);
-        console.log(game.fen())
+
       
         const move = makeAMove({
           from: sourceSquare,
           to: targetSquare,
            // always promote to a queen for example simplicity
         });
-        console.log(move);
         // illegal move
         if (move === null) return false;
-        
-       // setTimeout(makeRandomMove, 200);
-        console.log(game.fen())
         setFen(game.fen());
         return true;
         
       }
     
   const makeSavedMove = () => {
-    
-    moves.forEach((move, index) => {
-      setTimeout(()=>{
-        game.move(move);
-        setGame(game);
-        setFen(game.fen());
-      }, index*1000);
    
+    let index = 0;
+    const intervalId = setInterval(() => {
+      game.move(moves[index]);
+      setGame(game);
+      setFen(game.fen());
+      index += 1;
+      if(index == moves.length){
+        clearInterval(intervalId);
+      }
       
-    })
+    }, 30)
     
   }
+  //------------------------------------------------------------------------
+  //---------------For Stockfish AI-----------------------------------------
+
+  const onDropStockfishOpponent = (sourceSquare : string, targetSquare : string) => {
+
+      
+    const move = makeAMove({
+      from: sourceSquare,
+      to: targetSquare,
+       // always promote to a queen for example simplicity
+    });
+    // illegal move
+    if (move === null) return false;
+    setFen(game.fen());
+    axios.post("http://localhost:5000/move-made", move).then((res) => {
+        makeAMove({
+          from : res.data.fromSquare,
+          to: res.data.toSquare
+        })
+        setFen(game.fen());
+    })
+    
+    return true;
+    
+  }
+
+  //-----------------------------------------------------------------------
   return (
-    <div><Chessboard position={fen} onPieceDrop = {onDrop}/>
+    <div><Chessboard position={fen} onPieceDrop = {onDropStockfishOpponent}/>
     <button onClick={makeSavedMove}>Make Move</button>
     <button onClick={sendMoves}>Send Moves</button>
     
