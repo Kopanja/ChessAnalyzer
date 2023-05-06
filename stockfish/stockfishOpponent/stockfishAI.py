@@ -27,22 +27,38 @@ stockfish.set_fen_position(startFen)
 @cross_origin()
 def post_moves():
     playerMove = request.json
-    move = Move(playerMove['color'], playerMove['piece'], playerMove['from'], playerMove['to'], playerMove['san'], playerMove['flags'])
+    #move = Move(playerMove['color'], playerMove['piece'], playerMove['from'], playerMove['to'], playerMove['san'], playerMove['flags'])
+    print(playerMove)
+    move = {"fromSquare" : playerMove['fromSquare'], "toSquare" : playerMove["toSquare"]}
     makePlayerMove(move)
-    stockMove = playLastStockfishMove()
+    stockMove = playAndGetStockfishMove()
     return stockMove
 
+@app.route('/start-game', methods = ['GET'])
+@cross_origin()
+def start_game():
+    stockfish.set_fen_position(startFen)
+    return 'Done'
+
+@app.route('/spring-test', methods = ['GET'])
+@cross_origin()
+def spring_test():
+    return {"message" : "I work"}
+
 def makePlayerMove(move):
-    stockfish.make_moves_from_current_position([move.fromSquare+move.toSquare])
+    stockfish.make_moves_from_current_position([move['fromSquare']+move['toSquare']])
     
 
 def playAndGetStockfishMove():
     stockfishMove = stockfish.get_best_move()
     stockfish.make_moves_from_current_position([stockfishMove])
     moveJson = {'fromSquare' : stockfishMove[0:2], 'toSquare' : stockfishMove[2:4]}
-    stockfishMove = stockfish.get_top_moves(8)
-    print(stockfishMove)
-    return moveJson
+    stockfishMoves = stockfish.get_top_moves(3)
+    best_moves = []
+    print(stockfishMoves)
+    for bestMove in stockfishMoves:
+        best_moves.append({'fromSquare' : bestMove['Move'][0:2], 'toSquare' : bestMove['Move'][2:4]})
+    return {"stockfishMove" : moveJson, "bestPlayerMoves" : best_moves}
 
 def playLastStockfishMove():
     stockfishMove = stockfish.get_top_moves(8)[-1]

@@ -1,5 +1,5 @@
 //created on: Oct 31, 2022
-package com.bishopMoves
+package rules.bishop
 
 //list any import classes here.
 import java.util.List;

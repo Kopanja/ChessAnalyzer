@@ -1,5 +1,5 @@
 //created on: Nov 27, 2022
-package com.knight
+package rules.knight
 
 //list any import classes here.
 import com.sbnz.chessanalyzer.model.piece.Piece;
@@ -122,7 +122,7 @@ rule "Knight Defending DOWN RIGHT"
 
 end
 
-
+/*
 rule "LAST2"
 salience -99
   when
@@ -139,5 +139,5 @@ end
 
 
 
-
+*/
 

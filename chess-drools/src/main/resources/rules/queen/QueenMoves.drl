@@ -1,5 +1,5 @@
 //created on: Nov 23, 2022
-package com.queen
+package rules.queen
 
 //list any import classes here.
 import com.sbnz.chessanalyzer.model.piece.Piece;

@@ -1,5 +1,5 @@
 //created on: Nov 27, 2022
-package com.knight
+package rules.knight
 
 //list any import classes here.
 import com.sbnz.chessanalyzer.model.piece.Piece;
@@ -35,7 +35,6 @@ rule "Knight Moves UP LEFT"
 		$k : Knight(this.equals($piece))
 		$moveSquare : Square(rank == $startRank + 2, file == $startFile - 1,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
     then
-    	System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
         insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT,$boardNumS));
 
 end

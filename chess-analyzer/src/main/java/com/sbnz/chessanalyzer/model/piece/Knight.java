@@ -27,4 +27,9 @@ public class Knight extends Piece{
 		return this.getFEN();
 	}
 
+	@Override
+	public String getPieceName() {
+		return "Knight";
+	}
+
 }

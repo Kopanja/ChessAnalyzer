@@ -25,4 +25,9 @@ public class Rook extends Piece{
 		return this.getFEN();
 	}
 
+	@Override
+	public String getPieceName() {
+		return "Rook";
+	}
+
 }

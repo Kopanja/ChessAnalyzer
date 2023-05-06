@@ -4,10 +4,17 @@ package com.sbnz.chessanalyzer.controller;
 
 import java.util.List;
 
+import com.sbnz.chessanalyzer.dto.AnalysisObjectDTO;
+import com.sbnz.chessanalyzer.dto.CanCaptureDTO;
 import com.sbnz.chessanalyzer.dto.FenDTO;
+import com.sbnz.chessanalyzer.dto.FlaskSpringDTO;
+import com.sbnz.chessanalyzer.dto.MoveDTO;
+import com.sbnz.chessanalyzer.dto.StockfishResponse;
 import com.sbnz.chessanalyzer.model.Move;
 import com.sbnz.chessanalyzer.model.stock_drools.AnalysisObject;
+import com.sbnz.chessanalyzer.model.stock_drools.StockMove;
 import com.sbnz.chessanalyzer.service.KieSessionService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping(value = "api/test")
@@ -60,6 +68,29 @@ public class TestController {
 		kieSessionService.insertOneMove(obj);
 	
 		return new ResponseEntity<>("OK2", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/init-board", method = RequestMethod.GET)
+	public ResponseEntity<?> initBoard() {
+		kieSessionService.initilizeBoard();
+	
+		return new ResponseEntity<>("OK2", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/post-one-move-2", method = RequestMethod.POST)
+	public ResponseEntity<?> postOneMove2(@RequestBody MoveDTO move) {
+		kieSessionService.moveMade(new StockMove(move.getFromSquare(), move.getToSquare()));
+		MoveDTO moveForStockfish = new MoveDTO(move.getFromSquare(), move.getToSquare());
+		
+		final String uri = "http://localhost:5000/move-made";
+
+	    RestTemplate restTemplate = new RestTemplate();
+	    StockfishResponse stockfishResponse = restTemplate.postForObject(uri, moveForStockfish, StockfishResponse.class);
+	    System.out.println(stockfishResponse);
+	    List<CanCaptureDTO> canCaptures = kieSessionService.moveMade(new StockMove(stockfishResponse.getStockfishMove().getFromSquare(), stockfishResponse.getStockfishMove().getToSquare()));
+	    AnalysisObjectDTO result = new AnalysisObjectDTO(stockfishResponse.getStockfishMove(), canCaptures, stockfishResponse.getBestPlayerMoves());
+	  
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 }

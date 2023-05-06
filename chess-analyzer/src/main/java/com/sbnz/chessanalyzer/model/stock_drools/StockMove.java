@@ -13,6 +13,14 @@ public class StockMove {
 		super();
 	}
 
+	
+	public StockMove(String fromSquare, String toSquare) {
+		super();
+		this.fromSquare = fromSquare;
+		this.toSquare = toSquare;
+	}
+
+
 	public StockMove(char color, String fromSquare, String toSquare, char piece, String san) {
 		super();
 		this.color = color;
@@ -80,6 +88,12 @@ public class StockMove {
 
 	public void setBoardNum(int boardNum) {
 		this.boardNum = boardNum;
+	}
+
+	@Override
+	public String toString() {
+		return "StockMove [color=" + color + ", fromSquare=" + fromSquare + ", toSquare=" + toSquare + ", piece="
+				+ piece + ", san=" + san + ", boardNum=" + boardNum + "]";
 	}
 	
 	

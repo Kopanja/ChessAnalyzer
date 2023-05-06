@@ -26,4 +26,9 @@ public class Bishop extends Piece{
 		return this.getFEN();
 	}
 
+	@Override
+	public String getPieceName() {
+		return "Bishop";
+	}
+
 }

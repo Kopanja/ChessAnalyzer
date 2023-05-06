@@ -65,5 +65,7 @@ public abstract class Piece {
 	}
 	public abstract String getFEN();
 	
+	public abstract String getPieceName();
+	
 	
 }

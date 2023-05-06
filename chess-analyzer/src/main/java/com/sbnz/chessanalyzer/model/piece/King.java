@@ -26,4 +26,9 @@ public class King extends Piece{
 		return this.getFEN();
 	}
 
+	@Override
+	public String getPieceName() {
+		return "King";
+	}
+
 }

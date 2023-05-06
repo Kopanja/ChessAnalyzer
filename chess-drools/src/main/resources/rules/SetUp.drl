@@ -15,10 +15,10 @@ import com.sbnz.chessanalyzer.model.piece.Piece;
 
 rule "Make Capture"
 	//salience -100
-	no-loop
+	lock-on-active
     when
         $b : Board($boardNum : boardNum)
-        $sm : StockMove($fromSquare : fromSquare, $toSquare : toSquare, $san : san, boardNum == $boardNum)
+        $sm : StockMove($fromSquare : fromSquare, $toSquare : toSquare, $san : san)
         $fromS : Square(squareText.equals($fromSquare), $piece1 : piece, boardNum == $boardNum)
         $p1 : Piece(this.equals($piece1))
         $toS : Square(squareText.equals($toSquare), $piece2 : piece, boardNum == $boardNum)
@@ -29,27 +29,32 @@ rule "Make Capture"
          modify($toS){setPiece($p1)}
          modify($fromS){setPiece(null)}
          retract($p2)
-         retract($sm)
+         //retract($sm)
 end
 
 
 rule "Make Move"
 	//salience -100
-	no-loop
+	lock-on-active
     when
         $b : Board($boardNum : boardNum)
-        $sm : StockMove($fromSquare : fromSquare, $toSquare : toSquare, $san : san, boardNum == $boardNum)
+        $sm : StockMove($fromSquare : fromSquare, $toSquare : toSquare, $san : san)
         $fromS : Square(squareText.equals($fromSquare), $piece1 : piece, boardNum == $boardNum)
         $p1 : Piece(this.equals($piece1))
         $toS : Square(squareText.equals($toSquare), piece == null, boardNum == $boardNum)
     then
     	System.out.println("Make Move Rule");
     	System.out.println($san);
-         modify($toS){setPiece($p1)}
-         modify($fromS){setPiece(null)}
-         retract($sm)
+        modify($toS){setPiece($p1)}
+        modify($fromS){setPiece(null)}
+        //retract($sm)
+        
+         
 end
 
+
+
+/*
 rule "Black Material"
 salience -9999
 when
@@ -73,4 +78,4 @@ when
 then
     System.out.println("White player has Material value of " + $totalMaterial + " In Position " + $fen);
 end
-
+*/

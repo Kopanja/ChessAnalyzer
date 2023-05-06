@@ -1,4 +1,4 @@
-package com.sample
+package rules
  
 import com.sbnz.chessanalyzer.model.Move;
 import com.sbnz.chessanalyzer.model.BoardCounter;
@@ -11,6 +11,26 @@ import java.lang.Object;
 import com.sbnz.chessanalyzer.model.piece.Piece;
 
 
+rule "Board Rule 2"
+    when
+        $b : Board()
+        $s : Object() from $b.squares
+        $square : Square($boardNum : boardNum) from $s
+        
+    then
+    	insert($square);
+end
+
+
+rule "Insert Piece Rule"
+	when
+		$s : Square($piece : piece, piece != null) 
+	then
+		insert($piece);
+		
+end
+
+/*
 rule "Insert Counter"
 salience 9999
 when
@@ -48,23 +68,6 @@ no-loop
     	
 end
 
-rule "Board Rule 2"
-    when
-        $b : Board()
-        $s : Object() from $b.squares
-        $square : Square($boardNum : boardNum) from $s
-        
-    then
-    	insert($square);
-end
 
 
-rule "Insert Piece Rule"
-	when
-		$s : Square($piece : piece, piece != null) 
-	then
-		insert($piece);
-		
-end
-
-	
+	*/

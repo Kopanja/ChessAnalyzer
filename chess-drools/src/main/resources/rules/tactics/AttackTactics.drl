@@ -1,5 +1,5 @@
 //created on: Mar 16, 2023
-package tactics
+package rules.tactics
 
 //list any import classes here.
 import com.sbnz.chessanalyzer.model.IsAttacking;
@@ -15,41 +15,45 @@ import java.util.List;
 
 
 rule "Is Checking"
+salience -99
     when
         $p : Piece()
         $k : King()
         IsAttacking($p, $k;)
     then
     	insertLogical(new IsChecking($p, $k));
-        System.out.println("Piece " + $p.getFEN() + " Is Checking King");
+        //System.out.println("Piece " + $p.getFEN() + " Is Checking King");
 end
 
 rule "Is Attacking A Higher Value Piece"
+salience -99
     when
         $p1 : Piece($p1Value : value)
         $p2 : Piece(value > $p1Value)
         IsAttacking($p1, $p2;)
     then
-        System.out.println("Piece " + $p1.getFEN() + " Is Attacking a Higher Value Piece and can capture" + $p2.getFEN());
-        insertLogical(new CanCapture($p1, $p2));
+        //System.out.println("Piece " + $p1.getFEN() + " Is Attacking a Higher Value Piece and can capture" + $p2.getFEN());
+        insertLogical(new CanCapture($p1, $p2, $p2.getPieceName() + " is a more valuable piece then " + $p1.getPieceName()));
 end
 
 
 rule "Is Attacking An Undefended piece"
+salience -99
     when
         IsAttacking($p1, $p2;)
         not IsDefending($p3, $p2;)
     then
-        System.out.println("Piece " + $p1.getFEN() + " Can Capture Undefended Piece " + $p2.getFEN());
-        insertLogical(new CanCapture($p1, $p2));
+        //System.out.println("Piece " + $p1.getFEN() + " Can Capture Undefended Piece " + $p2.getFEN());
+        insertLogical(new CanCapture($p1, $p2, $p2.getPieceName() + " is not defended"));
 end
 
 
 rule "Fork"
+salience -99
   when
   		$p : Piece($boardNum : boardNum)
   		$list : List(size >= 2) from collect(IsAttacking($p,$p2;))
     then
-        System.out.println("Piece color: " + $p.getFEN() + " Is Forking " + $list.size()  + " pieces in");
+        //System.out.println("Piece color: " + $p.getFEN() + " Is Forking " + $list.size()  + " pieces in");
 
 end
