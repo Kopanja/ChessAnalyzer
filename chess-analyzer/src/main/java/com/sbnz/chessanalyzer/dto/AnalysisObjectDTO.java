@@ -6,7 +6,7 @@ public class AnalysisObjectDTO {
 	
 	private MoveDTO stockfishMove;
 	private List<CanCaptureDTO> canCaptures;
-	private List<MoveDTO> bestPlayerMoves;
+	private List<StockRecomendation> bestPlayerMoves;
 	
 	public AnalysisObjectDTO(MoveDTO stockfishMove, List<CanCaptureDTO> canCaptures) {
 		super();
@@ -16,7 +16,7 @@ public class AnalysisObjectDTO {
 	
 	
 	
-	public AnalysisObjectDTO(MoveDTO stockfishMove, List<CanCaptureDTO> canCaptures, List<MoveDTO> bestPlayerMoves) {
+	public AnalysisObjectDTO(MoveDTO stockfishMove, List<CanCaptureDTO> canCaptures, List<StockRecomendation> bestPlayerMoves) {
 		super();
 		this.stockfishMove = stockfishMove;
 		this.canCaptures = canCaptures;
@@ -45,13 +45,13 @@ public class AnalysisObjectDTO {
 
 
 
-	public List<MoveDTO> getBestPlayerMoves() {
+	public List<StockRecomendation> getBestPlayerMoves() {
 		return bestPlayerMoves;
 	}
 
 
 
-	public void setBestPlayerMoves(List<MoveDTO> bestPlayerMoves) {
+	public void setBestPlayerMoves(List<StockRecomendation> bestPlayerMoves) {
 		this.bestPlayerMoves = bestPlayerMoves;
 	}
 	

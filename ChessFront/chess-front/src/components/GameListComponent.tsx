@@ -4,6 +4,7 @@ import { Props, User } from '../types/User.types';
 import axios from 'axios';
 import { Game } from '../types/Game.types';
 import GameListItem from './GameListItem';
+
 const GameListComponent : React.FC<Props> = ( {user} ) => {
     const [games, setGames] = useState<Game[]>([]);
     useEffect(() => {

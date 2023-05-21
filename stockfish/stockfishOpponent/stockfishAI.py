@@ -10,7 +10,8 @@ from move import Move
 #nadjes sve blundere sa stockfishom, uzmes linije {fen pre poteza, potez, po 3 poteza unapred}, i to saljes u drools da uradis
 #u droolsu je uradjena za sad deo analize prvog polja (fen pre poteza)
 
-stockfish = Stockfish(r"C:\Users\kopan\OneDrive\Desktop\stockfish-11-win\Windows\stockfish_20011801_x64.exe")
+stockfishAnalysis = Stockfish(r"C:\Users\kopan\OneDrive\Desktop\stockfish-11-win\Windows\stockfish_20011801_x64.exe")
+stockfishOponent = Stockfish(r"C:\Users\kopan\OneDrive\Desktop\stockfish-11-win\Windows\stockfish_20011801_x64.exe")
 startFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 
@@ -21,7 +22,8 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 
-stockfish.set_fen_position(startFen)
+stockfishAnalysis.set_fen_position(startFen)
+stockfishOponent.set_fen_position(startFen)
 
 @app.route('/move-made', methods = ['POST'])
 @cross_origin()
@@ -37,7 +39,9 @@ def post_moves():
 @app.route('/start-game', methods = ['GET'])
 @cross_origin()
 def start_game():
-    stockfish.set_fen_position(startFen)
+    stockfishAnalysis.set_fen_position(startFen)
+    stockfishOponent.set_fen_position(startFen)
+    stockfishOponent.set_elo_rating(300)
     return 'Done'
 
 @app.route('/spring-test', methods = ['GET'])
@@ -46,27 +50,31 @@ def spring_test():
     return {"message" : "I work"}
 
 def makePlayerMove(move):
-    stockfish.make_moves_from_current_position([move['fromSquare']+move['toSquare']])
+    stockfishAnalysis.make_moves_from_current_position([move['fromSquare']+move['toSquare']])
+    stockfishOponent.make_moves_from_current_position([move['fromSquare']+move['toSquare']])
     
 
 def playAndGetStockfishMove():
-    stockfishMove = stockfish.get_best_move()
-    stockfish.make_moves_from_current_position([stockfishMove])
+    stockfishMove = stockfishOponent.get_best_move()
+    
+    stockfishAnalysis.make_moves_from_current_position([stockfishMove])
+    stockfishOponent.make_moves_from_current_position([stockfishMove])
+    
     moveJson = {'fromSquare' : stockfishMove[0:2], 'toSquare' : stockfishMove[2:4]}
-    stockfishMoves = stockfish.get_top_moves(3)
+    stockfishMoves = stockfishAnalysis.get_top_moves(3)
     best_moves = []
     print(stockfishMoves)
     for bestMove in stockfishMoves:
         best_moves.append({'fromSquare' : bestMove['Move'][0:2], 'toSquare' : bestMove['Move'][2:4]})
     return {"stockfishMove" : moveJson, "bestPlayerMoves" : best_moves}
 
-def playLastStockfishMove():
-    stockfishMove = stockfish.get_top_moves(8)[-1]
-    stockfishMove = stockfishMove['Move']
-    stockfish.make_moves_from_current_position([stockfishMove])
-    moveJson = {'fromSquare' : stockfishMove[0:2], 'toSquare' : stockfishMove[2:4]}
-    print(stockfishMove)
-    return moveJson
+#def playLastStockfishMove():
+#    stockfishMove = stockfish.get_top_moves(8)[-1]
+#    stockfishMove = stockfishMove['Move']
+#    stockfish.make_moves_from_current_position([stockfishMove])
+#    moveJson = {'fromSquare' : stockfishMove[0:2], 'toSquare' : stockfishMove[2:4]}
+#    print(stockfishMove)
+#    return moveJson
 
 
 if __name__ == "__main__":

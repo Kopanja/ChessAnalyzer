@@ -32,7 +32,6 @@ salience -99
         $p2 : Piece(value > $p1Value)
         IsAttacking($p1, $p2;)
     then
-        //System.out.println("Piece " + $p1.getFEN() + " Is Attacking a Higher Value Piece and can capture" + $p2.getFEN());
         insertLogical(new CanCapture($p1, $p2, $p2.getPieceName() + " is a more valuable piece then " + $p1.getPieceName()));
 end
 
@@ -43,7 +42,6 @@ salience -99
         IsAttacking($p1, $p2;)
         not IsDefending($p3, $p2;)
     then
-        //System.out.println("Piece " + $p1.getFEN() + " Can Capture Undefended Piece " + $p2.getFEN());
         insertLogical(new CanCapture($p1, $p2, $p2.getPieceName() + " is not defended"));
 end
 

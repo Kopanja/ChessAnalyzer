@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Chess } from "chess.js";
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
+
 const ChessBoardComponent = () => {
 
   const [fen, setFen] = useState<string>('start')
@@ -38,7 +39,7 @@ const ChessBoardComponent = () => {
     return moves;
   }
 
-  const moves = extractPGN();
+  //const moves = extractPGN();
 
 
   const sendMoves = () => {
@@ -84,8 +85,8 @@ const ChessBoardComponent = () => {
     return true;
 
   }
-
-  const makeSavedMove = () => {
+  
+ /* const makeSavedMove = () => {
 
     let index = 0;
     const intervalId = setInterval(() => {
@@ -99,7 +100,7 @@ const ChessBoardComponent = () => {
 
     }, 30)
 
-  }
+  }*/
   //------------------------------------------------------------------------
   //---------------For Stockfish AI-----------------------------------------
 
@@ -125,6 +126,8 @@ const ChessBoardComponent = () => {
 
         //arrows.push([res.data.fromSquare, res.data.toSquare]);
         //arrows.push(['a1', 'a5']);
+
+        
         canCaptures.forEach((canCapture: any) => {
           setArrows([...arrows, [canCapture.fromSquare, canCapture.toSquare]]);
         });
@@ -136,10 +139,14 @@ const ChessBoardComponent = () => {
         //arrows.push([res.data.fromSquare, res.data.toSquare]);
         //arrows.push(['a1', 'a5']);
         console.log(bestPlayerMoves)
+        let updatedArrows : string[][] = []
         bestPlayerMoves.forEach((bestPlayerMove: any) => {
-          setArrows([...arrows, [bestPlayerMove.fromSquare, bestPlayerMove.toSquare]]);
-          console.log(arrows)
+          updatedArrows = [...updatedArrows, [bestPlayerMove.fromSquare, bestPlayerMove.toSquare, "rgb(255,255,255)"]];
+          
         });
+
+        setArrows(updatedArrows);
+        
       }
       const move = makeAMove({
         from: stockfishMove.fromSquare,
@@ -149,32 +156,7 @@ const ChessBoardComponent = () => {
       // illegal move
       if (move === null) return false;
       setFen(game.fen());
-    }); /*
-    const move = makeAMove({
-      from: sourceSquare,
-      to: targetSquare,
-       // always promote to a queen for example simplicity
-    });
-    // illegal move
-    if (move === null) return false;
-    setFen(game.fen());
-    console.log(move);
-   
-    axios.post("http://localhost:5000/move-made", move).then((res) => {
-        console.log(res.data)
-        makeAMove({
-          from : res.data.fromSquare,
-          to: res.data.toSquare
-        })
-        const stockMove = {fromSquare : res.data.fromSquare, toSquare : res.data.toSquare, san : '', piece : '', boardNum : 0}
-        axios.post("http://localhost:8080/api/test/post-one-move-2", stockMove).then((res) =>
-        {
-          console.log(res.data);
-        });
-        setFen(game.fen());
-        //posalji potez drools-u, dobij odgovor
-
-    })*/
+    }); 
 
     return true;
 
@@ -190,8 +172,9 @@ const ChessBoardComponent = () => {
     const currentArrowsPolygons = document.getElementsByTagName("polygon");
     //console.log(currentArrowsPolygons)
     for (let i = 0; i < currentArrowsPolygons.length; i++) {
-      currentArrowsPolygons[i].style.fill = "rgb(255,61,61)";
+      currentArrowsPolygons[i].style.fill = "rgb(155,1,1)";
       currentArrowsPolygons[i].style.opacity = "0.7";
+      console.log(currentArrowsPolygons[i].style.top)
     }
 
     const currentArrowsLines = document.getElementsByTagName("line");
@@ -203,9 +186,9 @@ const ChessBoardComponent = () => {
   }
   //-----------------------------------------------------------------------
   return (
-    <div><Chessboard position={fen} onPieceDrop={onDropStockfishOpponent} customArrows={arrows} onArrowsChange={onArrowsChangeTest} />
+    <div><Chessboard position={fen} onPieceDrop={onDropStockfishOpponent} customArrows={arrows} />
       <button onClick={startGame}>Start Game</button>
-      <button onClick={makeSavedMove}>Make Move</button>
+     
       <button onClick={sendMoves}>Send Moves</button>
 
     </div>

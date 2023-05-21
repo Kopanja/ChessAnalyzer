@@ -8,8 +8,8 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <Routes>
-        <Route path="/" element = {<TestPage/>}/>
-        <Route path="/chessBoard" element = {<ChessBoardComponent/>}/>
+        
+        <Route path="/" element = {<ChessBoardComponent/>}/>
       </Routes>
       </BrowserRouter>
     </div>

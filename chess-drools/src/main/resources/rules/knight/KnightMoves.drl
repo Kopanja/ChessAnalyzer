@@ -23,7 +23,6 @@ rule "Knight Moves UP RIGHT"
 		$k : Knight(this.equals($piece))
 		$moveSquare : Square(rank == $startRank + 2, file == $startFile + 1,  $squareText2 : squareText, boardNum == $boardNumS, piece == null)
     then
-    	//System.out.println(" Square: " + $squareText + " on boar: " + $boardNumS);
         insertLogical(new CanMoveOn($k, $moveSquare, CanMoveOnType.KNIGHT,$boardNumS));
 
 end
