@@ -52,6 +52,16 @@ salience -99
   		$p : Piece($boardNum : boardNum)
   		$list : List(size >= 2) from collect(IsAttacking($p,$p2;))
     then
-        //System.out.println("Piece color: " + $p.getFEN() + " Is Forking " + $list.size()  + " pieces in");
+        System.out.println("Piece color: " + $p.getFEN() + " Is Forking " + $list.size()  + " pieces in");
+end
 
+
+rule "Fork - canCapture and checking"
+salience -99
+  when
+  		$p : Piece($boardNum : boardNum)
+  		CanCapture($p,$p2;)
+  		IsChecking($p, $k;)
+    then
+       System.out.println("Piece: " + $p + " Can Capture " + $p2  + " because it is also checking the king");
 end
