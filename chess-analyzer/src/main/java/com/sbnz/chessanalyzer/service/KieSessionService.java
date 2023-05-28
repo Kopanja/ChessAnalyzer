@@ -145,7 +145,7 @@ public class KieSessionService {
 		this.kSessionCEP.destroy();
 		this.kSessionCEP = kieContainer.newKieSession("cepKSession");
 		this.kSessionCEP.setGlobal("webSocketService", this.webSocketService);
-		Board b = new Board();
+		Board b = new Board(8);
 		Random rand = new Random();
 		int file = rand.nextInt(8);
 		int rank = rand.nextInt(8);

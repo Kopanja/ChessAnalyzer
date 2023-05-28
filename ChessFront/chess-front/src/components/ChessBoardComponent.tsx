@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import { Chess } from "chess.js";
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
+import { Square } from 'react-chessboard/dist/chessboard/types';
 
 const ChessBoardComponent = () => {
 
   const [fen, setFen] = useState<string>('start')
   const [game, setGame] = useState<Chess>(new Chess());
-  const [arrows, setArrows] = useState<string[][]>([]);
+  const [arrows, setArrows] = useState<Square[][]>([]);
   const [history, setHistory] = useState<[]>([]);
   const [squares, setSquares] = useState<[]>([]);
   const location = useLocation();
@@ -139,9 +140,9 @@ const ChessBoardComponent = () => {
         //arrows.push([res.data.fromSquare, res.data.toSquare]);
         //arrows.push(['a1', 'a5']);
         console.log(bestPlayerMoves)
-        let updatedArrows : string[][] = []
+        let updatedArrows : Square[][] = []
         bestPlayerMoves.forEach((bestPlayerMove: any) => {
-          updatedArrows = [...updatedArrows, [bestPlayerMove.fromSquare, bestPlayerMove.toSquare, "rgb(255,255,255)"]];
+          updatedArrows = [...updatedArrows, [bestPlayerMove.fromSquare as Square, bestPlayerMove.toSquare as Square]];
           
         });
 
@@ -186,7 +187,7 @@ const ChessBoardComponent = () => {
   }
   //-----------------------------------------------------------------------
   return (
-    <div><Chessboard position={fen} onPieceDrop={onDropStockfishOpponent} boardWidth={600}/>
+    <div><Chessboard position={fen} onPieceDrop={onDropStockfishOpponent} boardWidth={600} customArrows = {arrows}/>
       <button onClick={startGame}>Start Game</button>
      
       <button onClick={sendMoves}>Send Moves</button>
