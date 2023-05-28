@@ -1,0 +1,25 @@
+template header
+time
+
+package rules.knight_game
+
+import com.sbnz.chessanalyzer.model.knight_game.TimerTickEvent;
+import com.sbnz.chessanalyzer.model.knight_game.RoundEndEvent;
+import com.sbnz.chessanalyzer.service.WebSocketService;
+import com.sbnz.chessanalyzer.model.knight_game.dto.EventDTO;
+template "classification-rules"
+rule "Timer Tick_@{row.rowNumber}"
+    //include attributes such as "salience" here...
+    when
+        $timerTick: TimerTickEvent() 
+        not RoundEndEvent(this after[0s, @{time}s] $timerTick)
+           
+        //conditions
+    then
+    	retract($timerTick);
+    	webSocketService.sendEvent(new EventDTO(EventType.TIMER_TICK, ""));
+    	insert(new TimerTickEvent());
+        //actions
+end
+
+end template

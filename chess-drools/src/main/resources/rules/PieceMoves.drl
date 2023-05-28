@@ -22,7 +22,7 @@ salience -100
   when
   	
     then
-        System.out.println("DONE");
+        System.out.println("Done");
 
 end
 

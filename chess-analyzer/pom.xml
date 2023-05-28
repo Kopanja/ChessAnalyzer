@@ -44,11 +44,10 @@
 		</dependency>
 
 		<dependency>
-			<groupId>sbnz.integracija</groupId>
-			<artifactId>drools-valorant</artifactId>
-			<type>jar</type>
-			<version>0.0.1-SNAPSHOT</version>
+		   <groupId>org.springframework.boot</groupId>
+		   <artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -186,7 +186,7 @@ const ChessBoardComponent = () => {
   }
   //-----------------------------------------------------------------------
   return (
-    <div><Chessboard position={fen} onPieceDrop={onDropStockfishOpponent} customArrows={arrows} />
+    <div><Chessboard position={fen} onPieceDrop={onDropStockfishOpponent} boardWidth={600}/>
       <button onClick={startGame}>Start Game</button>
      
       <button onClick={sendMoves}>Send Moves</button>

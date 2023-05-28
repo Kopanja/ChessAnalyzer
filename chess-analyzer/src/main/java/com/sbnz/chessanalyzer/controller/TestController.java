@@ -9,7 +9,9 @@ import com.sbnz.chessanalyzer.dto.CanCaptureDTO;
 import com.sbnz.chessanalyzer.dto.FenDTO;
 import com.sbnz.chessanalyzer.dto.FlaskSpringDTO;
 import com.sbnz.chessanalyzer.dto.MoveDTO;
+import com.sbnz.chessanalyzer.dto.SquareSelectedDTO;
 import com.sbnz.chessanalyzer.dto.StockfishResponse;
+import com.sbnz.chessanalyzer.model.Message;
 import com.sbnz.chessanalyzer.model.Move;
 import com.sbnz.chessanalyzer.model.stock_drools.AnalysisObject;
 import com.sbnz.chessanalyzer.model.stock_drools.StockMove;
@@ -19,6 +21,7 @@ import com.sbnz.chessanalyzer.service.KieSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +34,7 @@ public class TestController {
 	
 	@Autowired
 	KieSessionService kieSessionService;
+	
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public ResponseEntity<?> getAllWeapons() {
@@ -92,5 +96,26 @@ public class TestController {
 	  
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/start-knight-game", method = RequestMethod.GET)
+	public ResponseEntity<?> knightGameStart() {
+		String squareText = this.kieSessionService.startKnightGame();
+		//String squareText = this.kieSessionService.templateTest();
+		return new ResponseEntity<>(new SquareSelectedDTO(squareText), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/end-round", method = RequestMethod.GET)
+	public ResponseEntity<?> knightGameEndRound() {
+		this.kieSessionService.endRound();
+		return new ResponseEntity<>("OK", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/square-selected", method = RequestMethod.POST)
+	public ResponseEntity<?> squareSelected(@RequestBody SquareSelectedDTO squareSelectedDTO) {
+		this.kieSessionService.squareClicked(squareSelectedDTO.getSquare());
+		return new ResponseEntity<>("OK", HttpStatus.OK);
+	}
+	
+
 
 }

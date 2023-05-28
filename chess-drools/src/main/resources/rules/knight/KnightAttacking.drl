@@ -18,7 +18,6 @@ import com.sbnz.chessanalyzer.model.IsAttacking;
 
 
 rule "Knight Attack UP RIGHT"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece), $color : color)
@@ -31,7 +30,6 @@ rule "Knight Attack UP RIGHT"
 end
 
 rule "Knight Attack UP LEFT"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece), $color : color)
@@ -44,7 +42,6 @@ end
 
 
 rule "Knight Attack LEFT UP"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece), $color : color)
@@ -56,7 +53,6 @@ rule "Knight Attack LEFT UP"
 end
 
 rule "Knight Attack LEFT DOWN"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece), $color : color)
@@ -70,7 +66,6 @@ end
 
 
 rule "Knight Attack RIGHT UP"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece), $color : color)
@@ -83,7 +78,6 @@ rule "Knight Attack RIGHT UP"
 end
 
 rule "Knight Attack RIGHT DOWN"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece), $color : color)
@@ -97,7 +91,6 @@ end
 
 
 rule "Knight Attack DOWN LEFT"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece), $color : color)
@@ -110,7 +103,6 @@ rule "Knight Attack DOWN LEFT"
 end
 
 rule "Knight Attack DOWN RIGHT"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece), $color : color)
@@ -125,6 +117,7 @@ end
 
 rule "Attackng Print"
 salience -99
+
   when
   		$r : Knight($boardNum : boardNum)
   		IsAttacking($r,$p;)

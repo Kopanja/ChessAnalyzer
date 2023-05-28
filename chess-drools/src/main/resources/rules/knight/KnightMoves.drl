@@ -17,7 +17,6 @@ import com.sbnz.chessanalyzer.model.CanMoveOn.CanMoveOnType;
 
 
 rule "Knight Moves UP RIGHT"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece))
@@ -28,7 +27,6 @@ rule "Knight Moves UP RIGHT"
 end
 
 rule "Knight Moves UP LEFT"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece))
@@ -40,7 +38,6 @@ end
 
 
 rule "Knight Moves LEFT UP"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece))
@@ -52,7 +49,6 @@ rule "Knight Moves LEFT UP"
 end
 
 rule "Knight Moves LEFT DOWN"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece))
@@ -65,7 +61,6 @@ end
 
 
 rule "Knight Moves RIGHT UP"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece))
@@ -77,7 +72,6 @@ rule "Knight Moves RIGHT UP"
 end
 
 rule "Knight Moves RIGHT DOWN"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece))
@@ -90,7 +84,6 @@ end
 
 
 rule "Knight Moves DOWN LEFT"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece))
@@ -102,7 +95,6 @@ rule "Knight Moves DOWN LEFT"
 end
 
 rule "Knight Moves DOWN RIGHT"
-
     when
         $s : Square($piece : piece, $squareText : squareText, $startRank : rank, $startFile : file, $boardNumS : boardNum) 
 		$k : Knight(this.equals($piece))
@@ -115,15 +107,12 @@ end
 
 /*
 rule "LAST Knight"
-salience -99
   when
   		$s2 : Square($piece : piece, $squareText : squareText)
-  		$r : Knight($boardNumber : boardNum, this.equals($piece))
+  		$r : Knight(this.equals($piece))
   		CanMoveOn($r,$s;)
-  		$b : Board(boardNum == $boardNumber, $fen : fen)
     then
-        System.out.println($r.getFEN() + " From square " +  $squareText + " Can Move on: " + $s.getSquareText() + " in positionllll: " + $fen + " Board Number " + $boardNumber);
+        System.out.println($r.getFEN() + " From square " +  $squareText + " Can Move on: " + $s.getSquareText());
 
 end
-
 */

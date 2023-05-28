@@ -3,4 +3,7 @@
     <kbase name="rules" packages="rules, bishop, rook, queen, knight, pawn, king, tactics">
         <ksession type="stateful" name="ksession-rules"/>
     </kbase>
+    <kbase name="cepConfigKbase" eventProcessingMode="stream" packages="rules, knight_game, knight">
+        <ksession name="cepKSession" clockType="realtime"/>
+    </kbase>
 </kmodule>

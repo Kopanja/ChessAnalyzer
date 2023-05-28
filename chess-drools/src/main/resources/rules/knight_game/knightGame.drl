@@ -1,0 +1,173 @@
+//created on: May 23, 2023
+package rules.knight_game
+//list any import classes here.
+import com.sbnz.chessanalyzer.model.knight_game.GameStartEvent;
+import com.sbnz.chessanalyzer.model.knight_game.RoundEndEvent;
+import com.sbnz.chessanalyzer.model.knight_game.RoundStartEvent;
+import com.sbnz.chessanalyzer.model.knight_game.SquareSelectedEvent;
+import com.sbnz.chessanalyzer.model.knight_game.TimerTickEvent;
+import com.sbnz.chessanalyzer.model.knight_game.CorrectClickEvent;
+import com.sbnz.chessanalyzer.model.knight_game.IncorrectClickEvent;
+import com.sbnz.chessanalyzer.model.knight_game.ClickEvent;
+import com.sbnz.chessanalyzer.model.knight_game.GameOverEvent;
+import com.sbnz.chessanalyzer.model.CanMoveOn;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.knight_game.EventType;
+import com.sbnz.chessanalyzer.model.knight_game.dto.EventDTO;
+import com.sbnz.chessanalyzer.service.WebSocketService;
+import com.sbnz.chessanalyzer.model.piece.Knight;
+import com.sbnz.chessanalyzer.model.Square;
+import com.sbnz.chessanalyzer.model.Board;
+import java.util.Random;
+import java.util.List;
+//declare any global variables here
+
+global WebSocketService webSocketService;
+
+rule "Game Started"
+lock-on-active
+    when
+        GameStartEvent()
+    then
+    	System.out.println("Game Started");
+    	insert(new TimerTickEvent());
+    	webSocketService.sendEvent(new EventDTO(EventType.GAME_STARTED, ""));
+      
+end
+
+rule "Game Over - score 0"
+    when
+        GameStartEvent(score <= 0)
+        not GameOverEvent()
+    then
+    	System.out.println("Game Over");
+    	insert(new GameOverEvent());
+      
+end
+rule "Round Started"
+    when
+        RoundStartEvent($squareText : squareText)
+        $square: Square(squareText == $squareText)
+        $k : Knight()
+    then
+    	System.out.println("Round Started");
+    	modify($square){setPiece($k)};
+    	webSocketService.sendEvent(new EventDTO(EventType.ROUND_STARTED, $squareText));
+end
+rule "Correct Square Selected"
+    when
+    	$rs : RoundStartEvent(isActiveRound == true);
+    	SquareSelectedEvent($sq : square, this after $rs)
+    	$s : Square(squareText == $sq)
+    	CanMoveOn($k,$s;)
+    then
+    	webSocketService.sendEvent(new EventDTO(EventType.CORRECT_SQUARE, $sq));
+    	insert(new CorrectClickEvent());
+end
+
+rule "Incorect Square Selected"
+    when
+    	$rs : RoundStartEvent(isActiveRound == true)
+    	SquareSelectedEvent($sq : square, this after $rs)
+    	$s : Square(squareText == $sq)
+    	not CanMoveOn($k,$s;)
+    then
+    	webSocketService.sendEvent(new EventDTO(EventType.WRONG_SQUARE, $sq));
+    	insert(new IncorrectClickEvent());
+
+end
+rule "Game end"
+    when
+    	GameOverEvent()
+    then
+    	drools.halt();
+    	System.out.println("Drools Halted");
+    	webSocketService.sendEvent(new EventDTO(EventType.GAME_ENDED, ""));
+end
+
+rule "Round end"
+no-loop
+    when
+    	$gs : GameStartEvent($score : score)
+    	$rs : RoundStartEvent(isActiveRound == true)
+    	$re : RoundEndEvent(this after $rs)
+    	$totalCorrectClicks : Number() from accumulate(
+       	$correct : CorrectClickEvent(this after $rs, this before $re),
+       	count($correct)
+    	)
+    	$totalIncorrectClicks : Number() from accumulate(
+       	$incorrect : IncorrectClickEvent(this after $rs, this before $re),
+       	count($incorrect)
+    	)
+    	
+    then
+    	int scoreDif = $totalCorrectClicks.intValue()*10 + $totalIncorrectClicks.intValue()*(-5);
+    	webSocketService.sendEvent(new EventDTO(EventType.ROUND_ENDED, "", scoreDif));
+    	int newScore = $score + scoreDif;
+    	if(newScore > 100){newScore = 100;}
+    	modify($gs){setScore(newScore)};
+    	System.out.println("Round Ended, Correct Clicks: " + $totalCorrectClicks + "; Incorrect Clicks " + $totalIncorrectClicks);
+    	System.out.println("Adjust score: " + scoreDif);
+end
+
+rule "Last Three Incorrect Clicks (Sliding Window)"
+	when
+		$rs : RoundStartEvent(isActiveRound == true)
+	    $windowEvents: List(size >= 3) from collect(
+        ClickEvent(this after $rs) over window:length(3)
+    )
+    Number(intValue == 3) from accumulate(
+        $incorrect : IncorrectClickEvent(this memberOf $windowEvents),
+        count()
+    )
+	then
+	    // Rule logic here
+	    insert(new RoundEndEvent());
+	    System.out.println("Last three events are all IncorrectClickEvent");
+end
+
+rule "End Round if all correct squares are clicked"
+    when
+    	$rs : RoundStartEvent(isActiveRound == true)
+        $totalMoves : Number(intValue > 0) from accumulate(
+       	$move : CanMoveOn($k, $s;),
+       	count($move)
+    	)
+    	$totalCorrectClicks : Number() from accumulate(
+       	$correct : CorrectClickEvent(this after $rs),
+       	count($correct)
+    	)
+        eval($totalMoves == $totalCorrectClicks) 
+    then
+    	System.out.println("Game Ended; Total Moves: " + $totalMoves + "; Correct Clicks: " + $totalCorrectClicks);
+    	insert(new RoundEndEvent());
+end
+
+rule "Timer Tick"
+    when
+    	$gs : GameStartEvent($score : score)
+        $timerTick: TimerTickEvent() 
+        not GameOverEvent(this after[0s, 1s] $timerTick)
+    then
+    	retract($timerTick);
+    	webSocketService.sendEvent(new EventDTO(EventType.TIMER_TICK, "", -10));
+    	modify($gs){setScore($score - 10)};
+    	insert(new TimerTickEvent());
+end
+
+rule "New knight Position"
+	when
+		$rs : RoundStartEvent(isActiveRound == true, $squareText : squareText)
+		$b : Board()
+		$k : Knight()
+		$s : Square(piece == $k)
+		RoundEndEvent(this after $rs)
+	then
+		Random rand = new Random();
+		int file = rand.nextInt(8);
+		int rank = rand.nextInt(8);
+		modify($s){setPiece(null)};
+		modify($rs){setIsActiveRound(false)};
+		insert(new RoundStartEvent($b.getSquares()[file][rank].getSquareText()));
+		System.out.println("New knight position rule " + $b.getSquares()[file][rank].getSquareText());
+end
